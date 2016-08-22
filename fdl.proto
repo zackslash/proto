@@ -11,6 +11,13 @@ enum PropertyType{
     SET = 5;
 }
 
+enum WriteMode{
+    NONE = 0;
+    REPLACE = 1;
+    APPEND = 2; //Append and Remove used for List / Set / Counter Properties
+    REMOVE = 3;
+}
+
 enum WriteStatus{
     FAILURE = 0;
     SUCCESS = 1;
@@ -20,6 +27,7 @@ message Property{
     string property = 1;
     PropertyType type = 2;
     string value = 3;
+    WriteMode mode = 4;
 }
 
 message WriteRequest{
