@@ -1,0 +1,125 @@
+syntax = "proto3";
+
+package organisations;
+
+import "google/protobuf/timestamp.proto";
+
+enum Mode {
+    SANDBOX = 0;
+    PRODUCTION = 1;
+}
+
+enum Region{
+    GLOBAL = 0;
+    US = 1;
+    EUROPE = 2;
+    ASIA = 3;
+}
+
+enum MemberType{
+    OWNER = 0;
+    MEMBER = 1;
+    VIEWER = 2;
+    SUPPORT = 3;
+}
+
+enum InviteStatus{
+    PENDING = 0;
+    ACCEPTED = 1;
+    REJECTED = 2;
+    EXPIRED = 3;
+    NOT_FOUND = 4;
+}
+
+message CreateRequest{
+    string id = 1;
+    string name = 2;
+    string reseller_id = 3;
+    Mode mode = 4;
+    Region region = 5;
+}
+
+message RetrieveRequest{
+    string id = 1;
+}
+
+message Organisation{
+    string id = 1;
+    string name = 2;
+    string reseller_id = 3;
+    Mode mode = 4;
+    Region region = 5;
+    google.protobuf.Timestamp created = 6;
+}
+
+message AddMemberRequest{
+    string member_id = 1; //Fident ID to use as member
+    string organisation_id = 2;
+    MemberType type = 3;
+    google.protobuf.Timestamp expiry = 4;
+}
+
+message RemoveMemberRequest{
+    string member_id = 1; //Fident ID to use as member
+    string organisation_id = 2;
+}
+
+message InviteRequest{
+    string email = 1;
+    string organisation_id = 2;
+    MemberType type = 3;
+    google.protobuf.Timestamp expiry = 4;
+}
+
+message InviteStatus{
+    string email = 1;
+    InviteStatus status = 2;
+    string verification = 3; //Unique Key for this invite
+    google.protobuf.Timestamp created = 4;
+    google.protobuf.Timestamp actioned = 5; //time accepted, rejected or expired
+}
+
+message ActionInviteRequest{
+    string email = 1;
+    string organisation_id = 2;
+    string member_id = 3; //Fident ID to use as member
+    InviteStatus status = 4; //Accept / Reject
+    string verification = 5; //Unique Key to verify
+}
+
+message MemberStatus{
+    string member_id = 1;
+    string organisation_id = 2;
+    MemberType type = 3;
+    google.protobuf.Timestamp invited = 4;
+    google.protobuf.Timestamp expiry = 5;
+    google.protobuf.Timestamp joined = 6; //time accepted invitation
+    google.protobuf.Timestamp detached = 7;
+}
+
+message GetMembersRequest{
+    string organisation_id = 1;
+}
+
+message GetOrganisationsRequest{
+    string member_id = 1;
+}
+
+message Members{
+    map<string, MemberStatus> members = 1;
+}
+
+message Organisations{
+    map<string, Organisation> organisations = 1;
+}
+
+service Organisations{
+    rpc Create(CreateRequest) returns (Organisation);
+    rpc Retrieve(RetrieveRequest) returns (Organisation);
+    rpc GetOrganisations(GetOrganisationsRequest) returns (Organisations);
+    rpc AddMember(AddMemberRequest) returns (MemberStatus);
+    rpc RemoveMember(RemoveMemberRequest) returns (MemberStatus);
+    rpc GetMembers(GetMembersRequest) returns (Members);
+    rpc Invite(InviteRequest) returns (InviteStatus);
+    rpc ActionInvite(ActionInviteRequest) returns (MemberStatus);
+}

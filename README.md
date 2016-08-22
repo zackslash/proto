@@ -1,2 +1,2 @@
 # proto
-Service Proto Files
+Shared Service Proto Files
