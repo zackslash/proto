@@ -5,20 +5,18 @@ package fdl;
 enum PropertyType{
     META = 0;
     DATA = 1;
-    FLAG = 2;
-    COUNTER = 3;
-    LIST = 4;
-    SET = 5;
+    LIST = 2;
 }
 
-enum WriteMode{
+enum MutationMode{
     NONE = 0;
-    REPLACE = 1;
-    APPEND = 2; //Append and Remove used for List / Set / Counter Properties
-    REMOVE = 3;
+    WRITE = 1; //Create / Update Property - will replace a list
+    APPEND = 2; //Append items to a list
+    REMOVE = 3; //Remove items from a list
+    DELETE = 4; //Delete Property
 }
 
-enum WriteStatus{
+enum MutationStatus{
     FAILURE = 0;
     SUCCESS = 1;
 }
@@ -26,11 +24,11 @@ enum WriteStatus{
 message Property{
     string property = 1;
     PropertyType type = 2;
-    string value = 3;
-    WriteMode mode = 4;
+    string value = 3; //Should always be a json array for list property types
+    MutationMode mode = 4;
 }
 
-message WriteRequest{
+message MutationRequest{
     string fid = 1;
     repeated Property properties = 2;
     string member_id = 3;
@@ -43,7 +41,7 @@ message ReadRequest{
 
 message WriteResponse{
     string fid = 1;
-    WriteStatus status = 2;
+    MutationStatus status = 2;
     string status_message = 3;
 }
 
@@ -53,6 +51,6 @@ message PropertiesResponse{
 }
 
 service FDL{
-    rpc Write(WriteRequest) returns (WriteResponse);
+    rpc Mutate(MutationRequest) returns (MutationResponse);
     rpc Read(ReadRequest) returns (PropertiesResponse);
 }
