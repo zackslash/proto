@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package domains;
+
+import "google/protobuf/timestamp.proto";
+
+message LookupRequest{
+    string domain = 1; //lower case domain e.g. example.com
+}
+
+message GetDomainsRequest{
+    string brand_id = 1; //leave blank for all brands
+}
+
+message CreateRequest{
+    string domain = 1;
+    string brand_id = 2;
+}
+
+enum VerificationMode{
+    DNS = 0;
+    FILE = 1;
+    MANUAL = 2;
+}
+
+message Domain {
+    string domain = 1;
+    string brand_id = 2;
+    string verification = 3;
+    string verification_mode = 4;
+    string is_verified = 5;
+    google.protobuf.Timestamp date_verified = 6;
+    string language = 7;
+    string country = 8;
+}
+
+message Domains{
+    map<string, Domain> domains = 1;
+}
+
+message VerifyRequest{
+    string domain = 1; //Domain to verify
+}
+
+enum DomainServiceType{
+    SUPPORT_PORTAL = 0;
+    COMMUNICATION_PREFERENCES = 1;
+    CUSTOMER_PORTAL = 2;
+    SHORT_URL = 3;
+    REFERRAL_TRACKING = 4;
+    PUBLISHER_PORTAL = 5;
+    LIVE_CHAT = 6;
+}
+
+enum DomainServiceSchema{
+    HTTP = 0;
+    HTTPS = 1;
+}
+
+message DomainService{
+    string domain = 1;
+    string subdomain = 2;
+    DomainServiceType type = 3;
+    bool is_enabled = 4;
+    string base_url = 5; //e.g. https://support.fortifi.it/
+    DomainServiceSchema default_schema = 6;
+    repeated DomainServiceSchema availble_schema = 7;
+}
+
+message SetServiceRequest{
+    string domain = 1;
+    string subdomain = 2;
+    DomainServiceType type = 3;
+}
+
+message ServiceRequest{
+    string domain = 1;
+    DomainServiceType type = 2;
+}
+
+message DomainServices{
+    map<string, DomainService> services = 1;
+}
+
+service Domains{
+    rpc Create(CreateDomain) returns (Domain);
+    rpc GetDomains(GetDomainsRequest) returns (Domains);
+    rpc Retrieve(LookupRequest) returns (Domain);
+    rpc Verify(VerifyRequest) returns (Domain);
+
+    rpc SetService(SetServiceRequest) returns (DomainService);
+    rpc RetrieveService(ServiceRequest) returns (DomainService);
+    rpc GetServices(ServiceRequest) returns (DomainServices);
+    rpc RemoveService(ServiceRequest) returns (DomainService);
+    rpc DisableService(ServiceRequest) returns (DomainService);
+    rpc EnableService(ServiceRequest) returns (DomainService);
+}
