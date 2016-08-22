@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package fdl;
+
+enum PropertyType{
+    META = 0;
+    DATA = 1;
+    FLAG = 2;
+    COUNTER = 3;
+    LIST = 4;
+    SET = 5;
+}
+
+enum WriteStatus{
+    FAILURE = 0;
+    SUCCESS = 1;
+}
+
+message Property{
+    string property = 1;
+    PropertyType type = 2;
+    string value = 3;
+}
+
+message WriteRequest{
+    string fid = 1;
+    repeated Property properties = 2;
+    string member_id = 3;
+}
+
+message ReadRequest{
+    string fid = 1;
+    repeated Property properties = 2;
+}
+
+message WriteResponse{
+    string fid = 1;
+    WriteStatus status = 2;
+    string status_message = 3;
+}
+
+message PropertiesResponse{
+    string fid = 1;
+    repeated Property properties = 2;
+}
+
+service FDL{
+    rpc Write(WriteRequest) returns (WriteResponse);
+    rpc Read(ReadRequest) returns (PropertiesResponse);
+}
