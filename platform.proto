@@ -24,13 +24,13 @@ enum SocketAction{
     UNSUBSCRIBE = 2;
 }
 
-message SocketRequest{
+message SocketRequest {
     string socket_id = 1;
     SocketAction action = 2;
     string payload = 3;
 }
 
 service FortifiPlatform{
-    rpc HandleRequest(HttpRequest) returns (HttpResponse);
-    rpc SocketRequest(SocketRequest) returns (HttpResponse);
+    rpc HandleHttpRequest(HttpRequest) returns (HttpResponse);
+    rpc HandleSocketAction(SocketRequest) returns (HttpResponse);
 }
