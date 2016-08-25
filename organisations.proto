@@ -106,11 +106,11 @@ message GetOrganisationsRequest{
 }
 
 message MembersResponse{
-    map<string, MemberStatus> members = 1;
+    map<string, MemberStatusResponse> members = 1;
 }
 
 message OrganisationsResponse{
-    map<string, Organisation> organisations = 1;
+    map<string, OrganisationResponse> organisations = 1;
 }
 
 service Organisations{

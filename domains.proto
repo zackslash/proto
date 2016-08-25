@@ -35,7 +35,7 @@ message DomainResponse {
 }
 
 message DomainsResponse{
-    map<string, Domain> domains = 1;
+    map<string, DomainResponse> domains = 1;
 }
 
 message VerifyRequest{
@@ -78,8 +78,8 @@ message ServiceRequest{
     DomainServiceType type = 2;
 }
 
-message DomainServices{
-    map<string, DomainService> services = 1;
+message DomainServicesResponse{
+    map<string, DomainServiceResponse> services = 1;
 }
 
 service Domains{
