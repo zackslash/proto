@@ -20,8 +20,8 @@ message HttpResponse{
 }
 
 enum SocketAction{
-    SUBSCRIBE = 1;
-    UNSUBSCRIBE = 2;
+    SUBSCRIBE = 0;
+    UNSUBSCRIBE = 1;
 }
 
 message SocketRequest {
