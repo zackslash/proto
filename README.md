@@ -4,6 +4,12 @@ Shared Service Proto Files
 
 ## Naming
 
+### Messages
+- ***Request
+- ***Response
+
+### Calls
+
 Retrieve{SubType} - Get a single item e.g. Retrieve / RetrieveBar
 Get{Type/SubType}s - Get a list of items e.g. GetFoos / GetBars
 

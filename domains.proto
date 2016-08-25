@@ -23,7 +23,7 @@ enum VerificationMode{
     MANUAL = 2;
 }
 
-message Domain {
+message DomainResponse {
     string domain = 1;
     string brand_id = 2;
     string verification = 3;
@@ -34,7 +34,7 @@ message Domain {
     string country = 8;
 }
 
-message Domains{
+message DomainsResponse{
     map<string, Domain> domains = 1;
 }
 
@@ -57,7 +57,7 @@ enum DomainServiceSchema{
     HTTPS = 1;
 }
 
-message DomainService{
+message DomainServiceResponse{
     string domain = 1;
     string subdomain = 2;
     DomainServiceType type = 3;
@@ -83,15 +83,15 @@ message DomainServices{
 }
 
 service Domains{
-    rpc Create(CreateDomain) returns (Domain);
-    rpc GetDomains(GetDomainsRequest) returns (Domains);
-    rpc Retrieve(LookupRequest) returns (Domain);
-    rpc Verify(VerifyRequest) returns (Domain);
+    rpc Create(CreateDomain) returns (DomainResponse);
+    rpc GetDomains(GetDomainsRequest) returns (DomainsResponse);
+    rpc Retrieve(LookupRequest) returns (DomainResponse);
+    rpc Verify(VerifyRequest) returns (DomainResponse);
 
-    rpc SetService(SetServiceRequest) returns (DomainService);
-    rpc RetrieveService(ServiceRequest) returns (DomainService);
-    rpc GetServices(ServiceRequest) returns (DomainServices);
-    rpc RemoveService(ServiceRequest) returns (DomainService);
-    rpc DisableService(ServiceRequest) returns (DomainService);
-    rpc EnableService(ServiceRequest) returns (DomainService);
+    rpc SetService(SetServiceRequest) returns (DomainServiceResponse);
+    rpc RetrieveService(ServiceRequest) returns (DomainServiceResponse);
+    rpc GetServices(ServiceRequest) returns (DomainServicesResponse);
+    rpc RemoveService(ServiceRequest) returns (DomainServiceResponse);
+    rpc DisableService(ServiceRequest) returns (DomainServiceResponse);
+    rpc EnableService(ServiceRequest) returns (DomainServiceResponse);
 }

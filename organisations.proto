@@ -43,7 +43,7 @@ message RetrieveRequest{
     string id = 1;
 }
 
-message Organisation{
+message OrganisationResponse{
     string id = 1;
     string name = 2;
     string reseller_id = 3;
@@ -71,7 +71,7 @@ message InviteRequest{
     google.protobuf.Timestamp expiry = 4;
 }
 
-message InviteStatus{
+message InviteStatusResponse{
     string email = 1;
     InviteStatus status = 2;
     string verification = 3; //Unique Key for this invite
@@ -87,7 +87,7 @@ message ActionInviteRequest{
     string verification = 5; //Unique Key to verify
 }
 
-message MemberStatus{
+message MemberStatusResponse{
     string member_id = 1;
     string organisation_id = 2;
     MemberType type = 3;
@@ -105,21 +105,21 @@ message GetOrganisationsRequest{
     string member_id = 1;
 }
 
-message Members{
+message MembersResponse{
     map<string, MemberStatus> members = 1;
 }
 
-message Organisations{
+message OrganisationsResponse{
     map<string, Organisation> organisations = 1;
 }
 
 service Organisations{
-    rpc Create(CreateRequest) returns (Organisation);
-    rpc Retrieve(RetrieveRequest) returns (Organisation);
-    rpc GetOrganisations(GetOrganisationsRequest) returns (Organisations);
-    rpc AddMember(AddMemberRequest) returns (MemberStatus);
-    rpc RemoveMember(RemoveMemberRequest) returns (MemberStatus);
-    rpc GetMembers(GetMembersRequest) returns (Members);
-    rpc Invite(InviteRequest) returns (InviteStatus);
-    rpc ActionInvite(ActionInviteRequest) returns (MemberStatus);
+    rpc Create(CreateRequest) returns (OrganisationResponse);
+    rpc Retrieve(RetrieveRequest) returns (OrganisationResponse);
+    rpc GetOrganisations(GetOrganisationsRequest) returns (OrganisationsResponse);
+    rpc AddMember(AddMemberRequest) returns (MemberStatusResponse);
+    rpc RemoveMember(RemoveMemberRequest) returns (MemberStatusResponse);
+    rpc GetMembers(GetMembersRequest) returns (MembersResponse);
+    rpc Invite(InviteRequest) returns (InviteStatusResponse);
+    rpc ActionInvite(ActionInviteRequest) returns (MemberStatusResponse);
 }
