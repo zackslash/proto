@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package preferences;
+
+message Preference {
+    string name = 1;
+    string value = 2;
+}
+
+message PreferenceResponse {
+    string name = 1;
+    string value = 2;
+    int status = 3;
+    string message = 4;
+    string version = 5;
+}
+
+service Preferences {
+    rpc Mutate(Preference) returns (PreferenceResponse);
+    rpc Retrieve(Preference) returns (PreferenceResponse);
+}
