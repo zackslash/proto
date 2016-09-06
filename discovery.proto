@@ -21,7 +21,6 @@ message HeartBeatRequest{
 
 message LocationRequest{
     string app_id = 1;
-    string instance_uuid = 2;
 }
 
 enum ServiceStatus{
