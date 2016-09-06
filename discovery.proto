@@ -51,7 +51,7 @@ message ServiceLocation{
     ServiceStatus status = 4;
 }
 
-service Preferences {
+service Discovery {
     rpc Register(RegisterRequest) returns (DiscoveryResponse);
     rpc DeRegister(DeRegisterRequest) returns (DiscoveryResponse);
     rpc HeartBeat(HeartBeatRequest) returns (DiscoveryResponse);
