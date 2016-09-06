@@ -19,6 +19,11 @@ message HeartBeatRequest{
     string instance_uuid = 2;
 }
 
+message LocationRequest{
+    string app_id = 1;
+    string instance_uuid = 2;
+}
+
 enum ServiceStatus{
     OFFLINE = 0;
     ONLINE = 1;
@@ -56,4 +61,5 @@ service Discovery {
     rpc DeRegister(DeRegisterRequest) returns (DiscoveryResponse);
     rpc HeartBeat(HeartBeatRequest) returns (DiscoveryResponse);
     rpc Status(StatusRequest) returns (DiscoveryResponse);
+    rpc GetLocation(LocationRequest) returns (ServiceLocation);
 }
