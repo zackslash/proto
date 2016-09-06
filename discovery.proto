@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package discovery;
+
+message RegisterRequest {
+    string app_id = 1;
+    string instance_uuid = 2;
+    string service_host = 3;
+    string service_port = 4;
+}
+
+message DeRegisterRequest{
+    string app_id = 1;
+    string instance_uuid = 2;
+}
+
+message HeartBeatRequest{
+    string app_id = 1;
+    string instance_uuid = 2;
+}
+
+enum ServiceStatus{
+    OFFLINE = 0;
+    ONLINE = 1;
+    DEGRADED_PERFORMANCE = 2;
+    PARTIAL_OUTAGE = 3;
+    UNDER_MAINTENANCE = 5;
+}
+
+enum StatusTarget{
+    INSTANCE = 0;
+    SERVICE = 1;
+}
+
+message StatusRequest{
+    string app_id = 1;
+    string instance_uuid = 2;
+    string message = 3;
+    ServiceStatus status = 4;
+    StatusTarget target = 5;
+}
+
+message DiscoveryResponse{
+    bool recorded = 1;
+}
+
+message ServiceLocation{
+    string app_id = 1;
+    string service_host = 2;
+    string service_port = 3;
+    ServiceStatus status = 4;
+}
+
+service Preferences {
+    rpc Register(RegisterRequest) returns (DiscoveryResponse);
+    rpc DeRegister(DeRegisterRequest) returns (DiscoveryResponse);
+    rpc HeartBeat(HeartBeatRequest) returns (DiscoveryResponse);
+    rpc Status(StatusRequest) returns (DiscoveryResponse);
+}
