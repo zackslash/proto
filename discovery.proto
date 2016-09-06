@@ -6,7 +6,7 @@ message RegisterRequest {
     string app_id = 1;
     string instance_uuid = 2;
     string service_host = 3;
-    string service_port = 4;
+    int32 service_port = 4;
 }
 
 message DeRegisterRequest{
@@ -47,7 +47,7 @@ message DiscoveryResponse{
 message ServiceLocation{
     string app_id = 1;
     string service_host = 2;
-    string service_port = 3;
+    int32 service_port = 3;
     ServiceStatus status = 4;
 }
 
