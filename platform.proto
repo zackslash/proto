@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package fortifiPlatform;
+package platform;
 
 message HttpRequest {
     message HttpParameter{
