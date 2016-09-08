@@ -39,7 +39,7 @@ message ReadRequest{
     repeated Property properties = 2;
 }
 
-message WriteResponse{
+message MutationResponse{
     string fid = 1;
     MutationStatus status = 2;
     string status_message = 3;
