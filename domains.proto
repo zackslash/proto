@@ -83,7 +83,7 @@ message DomainServicesResponse{
 }
 
 service Domains{
-    rpc Create(CreateDomain) returns (DomainResponse);
+    rpc Create(CreateRequest) returns (DomainResponse);
     rpc GetDomains(GetDomainsRequest) returns (DomainsResponse);
     rpc Retrieve(LookupRequest) returns (DomainResponse);
     rpc Verify(VerifyRequest) returns (DomainResponse);
