@@ -1,0 +1,404 @@
+syntax = "proto3";
+
+package schema;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+
+enum DomainService {
+    CUSTOMER = 0;
+    COMMUNICATION = 1;
+    SUPPORT = 2;
+    CHAT = 3;
+}
+
+enum SoftwareInstalAction {
+    INSTALL = 0;
+    UNINSTALL = 1;
+    UPGRADE = 2;
+    REINSTALL = 3;
+}
+
+enum CommunicationDirection {
+    INBOUND = 0;
+    OUTBOUND = 1;
+}
+
+enum CommunicationMethod {
+    EMAIL = 0;
+    PHONE = 1;
+    SMS = 2;
+    LETTER = 3;
+    MEETING = 4;
+    CHAT = 5;
+    PUSH = 6;
+}
+
+enum SubscriptionAction {
+    SUBSCRIBE = 0;
+    UNSUBSCRIBE = 1;
+}
+
+enum RateStyle {
+    ONE_FIVE = 0;//1-5
+    ONE_TEN = 1;//1-10
+    YES_NO = 2;//Y/N
+    ONE_THREE = 3;//1-3
+    ONE_HUNDRED = 4;//1-100
+    ZERO_HUNDRED = 5;//0-100
+}
+
+enum LinkType {
+    FOLLOW = 0;//Redirecting to another site
+    DOWNLOAD = 1;//Triggers a download, keeping user on the same page
+}
+
+enum OperatingSystem {
+    WINDOWS = 0;
+    OSX = 1;
+    LINUX = 2;
+    ANDROID = 3;
+    BLACKBERRY = 4;
+    IOS = 5;
+    FIREFOX_OS = 6;
+    CHROME_OS = 7;
+    WEB_OS = 8;
+    PALM_OS = 9;
+    SYMBIAN = 10;
+    TIZEN = 11;
+    BSD = 12;
+}
+
+enum DeviceType {
+    DESKTOP = 0;
+    TABLET = 1;
+    PHONE = 2;
+    TV = 3;
+    CAMERA = 4;
+    CAR = 5;
+    CONSOLE = 6;
+    MEDIA_PLAYER = 7;
+    GAME_CONSOLE = 8;
+    BOT = 9;
+}
+
+enum CampaignMedium {
+    //Branding
+    PHONE = 0;
+    LETTER = 1;
+    EMAIL = 2;
+    SMS = 3;
+    DIRECT = 4;
+    ORGANIC_SEARCH = 5;
+    WORD_OF_MOUTH = 6;
+    REFERRAL = 7;
+
+    //Paid Advertising
+    AFFILIATE = 8;
+    AFFILIATE_NETWORK = 9;
+    PAID_SEARCH = 10;
+    RETARGETTING = 11;
+    SOCIAL_ADVERT = 12;
+    INCENTIVE = 13;
+    REVIEW = 14;
+    BANNER = 15;
+
+    //Generated Content
+    SOCIAL_MEDIA = 16;
+    WEBINAR = 17;
+    FORUM = 18;
+    VIDEO = 19;
+    PODCAST = 20;
+    RESEARCH_WHITEPAPER = 21;
+    BLOG = 22;
+    COMMENT_MARKETING = 23;
+    TESTIMONIAL = 24;
+    CASE_STUDY = 25;
+    EBOOK = 26;
+    HOW_TO_GUIDE = 27;
+    INFOGRAPHIC = 28;
+
+    //Offline
+    TV = 29;
+    RADIO = 30;
+    BILLBOARD = 31;
+    NEWSPAPER = 32;
+    MAGAZINE = 33;
+    BROCHURE = 34;
+    PRINT_NEWSLETTER = 35;
+    FLYER = 36;
+    BUSINESS_CARD = 37;
+    DIRECTORY = 38;//e.g. Yellow Pages
+    COMPANY_SWAG = 39; // e.g. T-Shirts
+}
+
+enum AgreementAction {
+    CREATED = 0;
+    ACCEPTED = 1;
+    SUSPENDED = 2;
+    UNSUSPENDED = 3;
+    CANCELLED = 4;
+    RESTORED = 5;
+    TERMINATED = 6;
+}
+
+enum PaymentMethod {
+    CASH = 0;
+    DEBIT_CARD = 1;
+    CREDIT_CARD = 2;
+    PREPAID_CARD = 3;
+    CHEQUE = 4;
+    BANK_TRANSFER = 5;
+    STANDING_ORDER = 6;
+    DIRECT_DEBIT = 7;
+    DIGITAL_WALLET = 8; //e.g. PayPal, Apple Pay
+    MOBILE_PAYMENT = 9;
+    BITCOIN = 10;
+    COUPON = 11;
+    CREDIT = 12;
+    ACCOUNT_BALANCE = 13;
+    DIGITAL_STORE = 14; //e.g. Play Store, AppStore
+}
+
+enum ProductType {
+    PRODUCT = 0;
+    SERVICE = 1;
+}
+
+enum PurchaseType {
+    ITEM = 0;
+    ADDON = 1;
+    UPSELL = 2;
+}
+
+enum BillingCycleDay {
+    SYNC_START = 0;//Progress by 1 month, would go no further than the 1st of the (+1 month) e.g. 31st Jan > 1st Mar
+    SYNC_END = 1;//Progress by 1 month, would not go past the next month, and sync to the end, e.g. 31st Jan > 28th Feb, would remain on 28th Mar
+    RESYNC_END = 2;//Same as sync end, but would sync back to the subscription start date, e.g. 31st Jan, 28th Feb, 31 Mar, 30 Apr
+    SPECIFIC_DAY = 3;
+    DAY_OF_WEEK = 4;
+    MONTH_END = 5;
+}
+
+enum BillingCyclePeriod {
+    NONE = 0;
+    DAY = 1;
+    WEEK = 2;
+    MONTH = 3;
+    YEAR = 4;
+}
+
+enum RefundType {
+    PARTIAL = 0;
+    FULL = 1;
+}
+
+enum RefundReason {
+    REQUESTED = 0;
+    DUPLICATE = 1;
+    FRAUDULENT = 2;
+}
+
+enum DisputeStatus {
+    OPEN = 0;
+    WON = 1;
+    LOST = 2;
+}
+
+enum DisputeReason {
+    FRAUDULENT = 0;
+    UNRECOGNIZED = 1;
+}
+
+message BillingCycle {
+    BillingCyclePeriod period = 1;
+    int32 frequency = 2;//e.g. 6 for 6 month
+    BillingCycleDay day = 3;
+    string day_value = 4;//e.g. 3 for 3rd of month, 1 for Monday (based on day value)
+}
+
+message EventDetail {
+    google.protobuf.Timestamp timestamp = 1;
+    string device_id = 2;
+    string advcanced_device_id = 3;
+    string app = 4;//domain / app-id
+    string customer_id = 5;
+    string ip = 6;
+    map<string,string> meta = 7;
+}
+
+message ViewedEvent {
+    EventDetail detail = 1;
+    string entity = 2; //Either FID or Unique Item e.g. URL
+}
+
+message OpenedEvent {
+    EventDetail detail = 1;
+    string entity = 2; //Either FID or Unique Item e.g. URL
+}
+
+message CampaignDetails {
+    string source = 1;// Publisher ID, domain e.g. google.com
+    string id = 2; //Campaign ID, Post ID etc
+    CampaignMedium medium = 3;
+}
+
+message TrackingDetails {
+    string id1 = 1;
+    string id2 = 2;
+    string id3 = 3;
+    string id4 = 4;
+    string id5 = 5;
+}
+
+message ImpressionEvent {
+    EventDetail detail = 1;
+    CampaignDetails campaign = 2; //e.g. source=advertiser,id=campaign-id,medium=banner
+    TrackingDetails tracking = 3;
+    string creative = 4;//Banner ID
+}
+
+message LinkEvent {
+    EventDetail detail = 1;
+    CampaignDetails campaign = 2; //e.g. source=advertiser,id=campaign-id,medium=banner
+    TrackingDetails tracking = 3;
+    LinkType type = 4;
+}
+
+message ConversionEvent {
+    EventDetail detail = 1;
+    CampaignDetails campaign = 2; //e.g. source=advertiser,id=campaign-id,medium=banner
+    TrackingDetails tracking = 3;
+    string transaction_id = 4;
+    string action = 5;
+    int64 unit_amount = 6;//amount in smallest unit
+    string currency = 7;
+}
+
+message InstallationEvent {
+    EventDetail detail = 1;
+    CampaignDetails campaign = 2; //e.g. source=advertiser,id=campaign-id,medium=banner
+    TrackingDetails tracking = 3;
+    SoftwareInstalAction type = 4;
+    string app_id = 5;
+    string version = 6;
+    OperatingSystem device_os = 7;
+    DeviceType device_type = 8;
+    string device_manufacturer = 9;//e.g. Apple, Microsoft, Samsung
+    string device = 10;//e.g. iPad, Nexus 5, Laptop, Desktop
+    string device_version = 11;
+}
+
+message CommunicationEvent {
+    EventDetail detail = 1;
+    CommunicationDirection direction = 2;
+    CommunicationMethod method = 3;
+    string provider = 4;
+    string initiator = 5;
+    string receiver = 6;
+    google.protobuf.Duration duration = 7;
+    string subject = 8;
+}
+
+message SubscriptionEvent {
+    EventDetail detail = 1;
+    string entity = 2; //e.g. newsletter id
+    SubscriptionAction action = 3;
+}
+
+message EntityRateEvent {
+    EventDetail detail = 1;
+    string entity = 2;
+    RateStyle style = 3;
+    string score = 4;
+    bool positive = 5;//If the rating should be taken as a positive rating
+}
+
+message SignupEvent {
+    EventDetail detail = 1;
+    CampaignDetails campaign = 2; //e.g. source=advertiser,id=campaign-id,medium=banner
+    TrackingDetails tracking = 3;
+    string username = 4;
+}
+
+message SearchEvent {
+    EventDetail detail = 1;
+    string term = 2;
+    string source = 3;//e.g. page or full url
+    DomainService service = 4;
+}
+
+message ActionEvent {
+    EventDetail detail = 1;
+    string entity = 2; //e.g. Ticket / Video-ID / google.com
+    string action = 3; //e.g. Created / Played / Logged In
+}
+
+message BillingAgreementEvent {
+    EventDetail detail = 1;
+    AgreementAction action = 2;
+    int64 min_amount = 3;
+    int64 max_amount = 4;
+    PaymentMethod payment_method = 5;
+    string payment_method_detail = 6;//e.g. Visa, Mastercard, PayPal
+    string name = 7;
+    string description = 8;
+}
+
+message PurchasedItem {
+    string product_code = 1;
+    string sku = 2;
+    string name = 3;
+    int64 unit_price = 4;
+    int32 quantity = 5;
+    ProductType product_type = 6;
+    PurchaseType purchase_type = 7;
+    google.protobuf.Timestamp expiry = 8;
+    google.protobuf.Timestamp start_date = 9;
+    bool renews = 10;
+}
+
+message PurchaseEvent {
+    EventDetail detail = 1;
+    CampaignDetails campaign = 2; //e.g. source=advertiser,id=campaign-id,medium=banner
+    TrackingDetails tracking = 3;
+    string transaction_id = 4;
+    string currency = 6;
+    int64 base_amount = 7;//amount in smallest unit
+    int64 tax_amount = 8;
+    int64 shipping_amount = 9;
+    int64 discount_amount = 10;
+    int64 setup_amount = 11;
+    PaymentMethod payment_method = 12;
+    string payment_method_detail = 14;//e.g. Visa, Mastercard, PayPal
+    string gateway = 14;
+    map<string,PurchasedItem> items = 15;
+}
+
+message RefundEvent {
+    EventDetail detail = 1;
+    string transaction_id = 2;
+    string charge_transaction_id = 3;
+    string currency = 4;
+    RefundType type = 5;
+    int64 amount = 6;
+    string reason = 7;
+    RefundReason reason_type = 8;
+}
+
+message DisputeEvent {
+    EventDetail detail = 1;
+    string transaction_id = 2;
+    DisputeStatus status = 3;
+    string currency = 4;
+    int64 amount = 5;
+    DisputeReason reason = 6;
+}
+
+message SocialEvent {
+    EventDetail detail = 1;
+    string network = 2;
+    string action = 3; //e.g. Like / Share / Tweet
+    string target = 4; //e.g. URL Liked
+    string message = 5; //e.g. Tweet Content
+}
