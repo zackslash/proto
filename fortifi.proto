@@ -12,7 +12,7 @@ enum DomainService {
     CHAT = 3;
 }
 
-enum SoftwareInstalAction {
+enum SoftwareInstallAction {
     INSTALL = 0;
     UNINSTALL = 1;
     UPGRADE = 2;
@@ -419,7 +419,7 @@ message InstallationEvent {
     EventDetail detail = 1;
     CampaignDetails campaign = 2; //e.g. source=advertiser,id=campaign-id,medium=banner
     TrackingDetails tracking = 3;
-    SoftwareInstalAction type = 4;
+    SoftwareInstallAction type = 4;
     string app_id = 5;
     string version = 6;
     OperatingSystem device_os = 7;
