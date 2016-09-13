@@ -210,12 +210,166 @@ enum DisputeReason {
     UNRECOGNIZED = 1;
 }
 
+enum CustomerAccountType {
+    UNKNOWN = 0;
+    RESIDENTIAL = 1;
+    BUSINESS = 2;
+    STUDENT = 3;
+}
+
+enum CustomerAccountStatus {
+    INITIALISED = 0;
+    SETUP = 1;
+    ACTIVE = 2;
+    SUSPENDED = 3;
+    EXPIRED = 4;
+    CANCELLED = 5;
+}
+
+enum CustomerLifecycle {
+    COLD = 0;//Provided details by a third party
+    SUBSCRIBER = 1;//Subscribed to a newsletter
+    CONTACTED = 2;//Contacted via some form
+    LEAD = 3;//Completed a product interest form e.g. more information about product
+    MARKETING_QUALIFIED_LEAD = 4;//Completed automated activities like viewing product demo
+    SALES_QUALIFIED_LEAD = 5;//Spoken to a sales rep for qualification
+    TRIAL = 6;// Subscribed for a trial account
+    FREE = 7;// Subscribed for a free account
+    OPPORTUNITY = 8;//Started Order Flow
+    CUSTOMER = 9;//Paying Customer
+    CANCELLED = 10;//Removed account (from paying)
+    LAPSED = 11;//Auto Cancelled
+    LOST = 12;//Removed account (From free)
+}
+
+enum CustomerOrientation {
+    UNKNOWN = 0;
+    COST = 1;//Focuses on least cost
+    VALUE = 2;//Focuses on value for money
+    TECHNOLOGY = 3;//Quality Product, Cost of less importance
+    BRAND = 4;//Will buy anything the brand sells
+}
+
+enum PurchaseStatus {
+    UNKNOWN = 0;
+    INTERESTED = 1;
+    CHECKOUT = 2;
+    SETUP = 3;
+    ACTIVE = 4;
+    INACTIVE = 5;
+    SUSPENDED = 6;
+    CANCELLED = 7;
+    ENDED = 8;
+    TRIAL = 9;
+}
+
 message BillingCycle {
     BillingCyclePeriod period = 1;
     int32 frequency = 2;//e.g. 6 for 6 month
     BillingCycleDay day = 3;
     string day_value = 4;//e.g. 3 for 3rd of month, 1 for Monday (based on day value)
 }
+
+message CampaignDetails {
+    string source = 1;// Publisher ID, domain e.g. google.com
+    string id = 2; //Campaign ID, Post ID etc
+    CampaignMedium medium = 3;
+}
+
+message TrackingDetails {
+    string id1 = 1;
+    string id2 = 2;
+    string id3 = 3;
+    string id4 = 4;
+    string id5 = 5;
+}
+
+message PurchasedItem {
+    string product_code = 1;
+    string sku = 2;
+    string name = 3;
+    int64 unit_price = 4;
+    int32 quantity = 5;
+    ProductType product_type = 6;
+    PurchaseType purchase_type = 7;
+    google.protobuf.Timestamp expiry = 8;
+    google.protobuf.Timestamp start_date = 9;
+    bool renews = 10;
+}
+
+// Core Entities
+
+message Brand {
+    string id = 1;
+    string name = 2;
+    string primary_domain = 3;
+}
+
+message Customer {
+    string id = 1;
+    string brand_id = 2;
+    string account_number = 3;
+    string display_name = 4;
+    string email = 5;
+    string phone = 6;
+    string language = 7;
+    string timezone = 8;
+    string country = 9;
+    CustomerAccountType account_type = 10;
+    CustomerAccountStatus account_status = 11;
+    CustomerLifecycle lifecycle = 12;
+    CustomerOrientation orientation = 13;
+    CampaignMedium source = 14;
+    string source_value = 15;//e.g. google.com / publisher-id
+    string parent_account = 16;
+    string account_manager = 17;
+}
+
+message CustomerDates {
+    string customer_id = 1;
+    google.protobuf.Timestamp opened = 2;
+    google.protobuf.Timestamp closed = 3;
+    google.protobuf.Timestamp trial_start = 4;
+    google.protobuf.Timestamp trial_end = 5;
+    google.protobuf.Timestamp reopened = 6;
+}
+
+message CustomerFlags {
+    string customer_id = 1;
+    bool loyal = 2;//Loyal to brand
+    bool vic = 3;//Very Important Customer
+    bool fraud = 4;//Had fraud activity on account
+    bool chargeback = 5;//Account has chargeback
+    bool discount = 6;//Has purchased after offered discount
+    bool impulse = 7;//Will buy on impulse
+    bool test_account = 8;
+    bool has_purchased = 9;//Has purchased anything
+    bool renewing = 10;//Account is renewing
+    bool at_risk = 11;//Usually unpaid bills, at risk of cancel
+}
+
+message CustomerBilling {
+    string customer_id = 1;
+    int64 balance = 2;
+    bool is_delinquent = 3;
+    int64 total_paid = 4;
+    int64 total_refunded = 5;
+    int64 total_chargeback = 6;
+    int64 total_credited = 7;
+    google.protobuf.Timestamp delinquent_since = 8;
+}
+
+message CustomerProductFeature {
+    string product_code = 1;
+    string feature_code = 2;
+    PurchaseStatus status = 3;
+}
+
+message CustomerProducts {
+    repeated CustomerProductFeature products = 1;
+}
+
+// EVENTS
 
 message EventDetail {
     google.protobuf.Timestamp timestamp = 1;
@@ -235,20 +389,6 @@ message ViewedEvent {
 message OpenedEvent {
     EventDetail detail = 1;
     string entity = 2; //Either FID or Unique Item e.g. URL
-}
-
-message CampaignDetails {
-    string source = 1;// Publisher ID, domain e.g. google.com
-    string id = 2; //Campaign ID, Post ID etc
-    CampaignMedium medium = 3;
-}
-
-message TrackingDetails {
-    string id1 = 1;
-    string id2 = 2;
-    string id3 = 3;
-    string id4 = 4;
-    string id5 = 5;
 }
 
 message ImpressionEvent {
@@ -343,19 +483,6 @@ message BillingAgreementEvent {
     string payment_method_detail = 6;//e.g. Visa, Mastercard, PayPal
     string name = 7;
     string description = 8;
-}
-
-message PurchasedItem {
-    string product_code = 1;
-    string sku = 2;
-    string name = 3;
-    int64 unit_price = 4;
-    int32 quantity = 5;
-    ProductType product_type = 6;
-    PurchaseType purchase_type = 7;
-    google.protobuf.Timestamp expiry = 8;
-    google.protobuf.Timestamp start_date = 9;
-    bool renews = 10;
 }
 
 message PurchaseEvent {
