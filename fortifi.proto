@@ -501,14 +501,17 @@ message FinanceTransaction {
     string currency = 3;
     int64 raw_amount = 4;
     int64 setup_amount = 5;
-    int64 discount_amount = 6;
-    int64 shipping_amount = 7;
-    int64 tax_amount = 8;
-    int64 total_amount = 9;
-    PaymentMethod payment_method = 10;
-    string payment_method_detail = 11;//e.g. Visa, Mastercard, PayPal
-    string gateway_id = 12;
-    google.protobuf.Timestamp timestamp = 13;
+    int64 shipping_amount = 6;
+    int64 discount_amount = 7;
+    int64 setup_discount_amount = 8;
+    int64 shipping_discount_amount = 9;
+    int64 tax_amount = 10;
+    int64 total_amount = 11;
+    int64 total_discount_amount = 12;
+    PaymentMethod payment_method = 13;
+    string payment_method_detail = 14;//e.g. Visa, Mastercard, PayPal
+    string gateway_id = 15;
+    google.protobuf.Timestamp timestamp = 16;
 }
 
 // EVENTS
