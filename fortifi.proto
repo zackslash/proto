@@ -19,9 +19,10 @@ enum SoftwareInstallAction {
     REINSTALL = 3;
 }
 
-enum CommunicationDirection {
+enum Direction {
     INBOUND = 0;
     OUTBOUND = 1;
+    BI_DIRECTIONAL = 2;
 }
 
 enum CommunicationMethod {
@@ -263,6 +264,40 @@ enum PurchaseStatus {
     TRIAL = 9;
 }
 
+enum DomainTargetType {
+    NONE = 0;
+    COUNTRY = 1;
+    LANGUAGE = 2;
+    PRODUCT = 3;
+    DEVELOPMENT = 4; //e.g. Serving alpha, beta etc
+}
+
+enum ServiceType {
+    EMAIL = 0;
+    SMS = 1;
+    URL_SHORTEN = 2;
+    PUSH = 3;//Push Notifications
+    STORAGE = 4;//Document Storage
+    TRANSLATE = 5;
+}
+
+enum MemberType {
+    NONE = 0;
+    OWNER = 1;
+    MEMBER = 2;
+    TEMPORARY = 3;
+}
+
+enum TransactionType {
+    AUTH = 0;
+    CAPTURE_AUTH = 1;
+    CAPTURE = 2;
+    CREDIT = 3;
+    REFUND = 4;
+    VOID = 5;
+    DISPUTE = 6;
+}
+
 message BillingCycle {
     BillingCyclePeriod period = 1;
     int32 frequency = 2;//e.g. 6 for 6 month
@@ -304,6 +339,8 @@ message Brand {
     string name = 2;
     string primary_domain = 3;
 }
+
+// - Customers
 
 message Customer {
     string id = 1;
@@ -360,13 +397,118 @@ message CustomerBilling {
 }
 
 message CustomerProductFeature {
-    string product_code = 1;
-    string feature_code = 2;
-    PurchaseStatus status = 3;
+    string customer_id = 1;
+    string product_code = 2;
+    string feature_code = 3;
+    PurchaseStatus status = 4;
 }
 
 message CustomerProducts {
     repeated CustomerProductFeature products = 1;
+}
+
+// - Products
+
+message Product {
+    string id = 1;
+    string name = 2;
+    string group = 3;
+    string code = 4;
+    ProductType type = 5;
+    string description = 6;
+}
+
+message ProductGroup {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message ProductFeature {
+    string id = 1;
+    string product_id = 2;
+    string name = 3;
+    string code = 4;
+    string description = 5;
+}
+
+// - Domains
+
+message DomainTarget {
+    DomainTargetType type = 1;
+    string value = 2; //e.g. en / en-GB / product-id / US
+}
+
+message Domain {
+    string domain = 1;
+    string brand_id = 2;
+    repeated DomainTarget targets = 3;
+    repeated DomainService services = 4;
+}
+
+message DomainService {
+    string domain = 1;
+    DomainService service = 2;
+    string subdomain = 3;
+}
+
+// - Services
+
+message Service {
+    string id = 1;
+    Direction direction = 2;
+    ServiceType service_type = 3;
+    string service_provider = 4;
+    string domain = 5;
+    string name = 6;
+    map<string,string> configuration = 7;
+    bool is_default = 8;
+}
+
+// - Org Structure
+
+message Member {
+    string fident_id = 1;
+    MemberType type = 2;
+}
+
+message Department {
+    string id = 1;
+    string name = 2;
+}
+
+// - Location
+
+message GeoLocation {
+    double longitude = 1;
+    double latitude = 2;
+    string continent = 3; //Europe, North America
+    string sovereign_state = 4;//United Kingdom, United States
+    string country = 5;//England, United States
+    string region = 6; //South West
+    string state = 7;//Devon, Arizona
+    string borough = 8;//Torbay, Maricopa County
+    string town = 9;//Paignton, Tempe
+    string suburb = 10;//Preston, -
+    string postal = 11;//TQ3 1, 85280
+}
+
+// - Finance
+
+message FinanceTransaction {
+    string transaction_id = 1;
+    TransactionType type = 2;
+    string currency = 3;
+    int64 raw_amount = 4;
+    int64 setup_amount = 5;
+    int64 discount_amount = 6;
+    int64 shipping_amount = 7;
+    int64 tax_amount = 8;
+    int64 total_amount = 9;
+    PaymentMethod payment_method = 10;
+    string payment_method_detail = 11;//e.g. Visa, Mastercard, PayPal
+    string gateway_id = 12;
+    google.protobuf.Timestamp timestamp = 13;
 }
 
 // EVENTS
@@ -409,10 +551,8 @@ message ConversionEvent {
     EventDetail detail = 1;
     CampaignDetails campaign = 2; //e.g. source=advertiser,id=campaign-id,medium=banner
     TrackingDetails tracking = 3;
-    string transaction_id = 4;
+    FinanceTransaction transaction = 4;
     string action = 5;
-    int64 unit_amount = 6;//amount in smallest unit
-    string currency = 7;
 }
 
 message InstallationEvent {
@@ -431,7 +571,7 @@ message InstallationEvent {
 
 message CommunicationEvent {
     EventDetail detail = 1;
-    CommunicationDirection direction = 2;
+    Direction direction = 2;
     CommunicationMethod method = 3;
     string provider = 4;
     string initiator = 5;
@@ -489,36 +629,23 @@ message PurchaseEvent {
     EventDetail detail = 1;
     CampaignDetails campaign = 2; //e.g. source=advertiser,id=campaign-id,medium=banner
     TrackingDetails tracking = 3;
-    string transaction_id = 4;
-    string currency = 6;
-    int64 base_amount = 7;//amount in smallest unit
-    int64 tax_amount = 8;
-    int64 shipping_amount = 9;
-    int64 discount_amount = 10;
-    int64 setup_amount = 11;
-    PaymentMethod payment_method = 12;
-    string payment_method_detail = 14;//e.g. Visa, Mastercard, PayPal
-    string gateway = 14;
-    map<string,PurchasedItem> items = 15;
+    FinanceTransaction transaction = 4;
+    map<string,PurchasedItem> items = 5;
 }
 
 message RefundEvent {
     EventDetail detail = 1;
-    string transaction_id = 2;
-    string charge_transaction_id = 3;
-    string currency = 4;
-    RefundType type = 5;
-    int64 amount = 6;
-    string reason = 7;
-    RefundReason reason_type = 8;
+    FinanceTransaction transaction = 2;
+    FinanceTransaction charge_transaction = 3;
+    RefundType type = 4;
+    string reason = 5;
+    RefundReason reason_type = 6;
 }
 
 message DisputeEvent {
     EventDetail detail = 1;
-    string transaction_id = 2;
-    DisputeStatus status = 3;
-    string currency = 4;
-    int64 amount = 5;
+    DisputeStatus status = 2;
+    FinanceTransaction transaction = 3;
     DisputeReason reason = 6;
 }
 
