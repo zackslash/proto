@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package fortifi.domain;
 
-option go_package = "github.com/fortifi/proto-go/ftypes/domain";
+option go_package = "domain";
 
 enum DomainServiceType {
     CUSTOMER = 0;
