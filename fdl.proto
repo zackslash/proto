@@ -50,7 +50,7 @@ message PropertiesResponse{
     repeated Property properties = 2;
 }
 
-service FDL{
+service Fdl{
     rpc Mutate(MutationRequest) returns (MutationResponse);
     rpc Read(ReadRequest) returns (PropertiesResponse);
 }

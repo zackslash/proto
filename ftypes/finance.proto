@@ -1,0 +1,139 @@
+syntax = "proto3";
+
+package fortifi.finance;
+
+option go_package = "github.com/fortifi/proto-go/ftypes/finance";
+
+import "google/protobuf/timestamp.proto";
+import "product.proto";
+
+enum TransactionType {
+    AUTH = 0;
+    CAPTURE_AUTH = 1;
+    CAPTURE = 2;
+    CREDIT = 3;
+    REFUND = 4;
+    VOID = 5;
+    DISPUTE = 6;
+    VERIFY = 7;
+}
+
+enum RefundType {
+    PARTIAL = 0;
+    FULL = 1;
+}
+
+enum RefundReason {
+    REQUESTED = 0;
+    DUPLICATE = 1;
+    FRAUDULENT = 2;
+}
+
+enum DisputeStatus {
+    OPEN = 0;
+    WON = 1;
+    LOST = 2;
+}
+
+enum DisputeReason {
+    FRAUD = 0;
+    UNRECOGNIZED = 1;
+}
+
+enum PaymentMethod {
+    CASH = 0;
+    DEBIT_CARD = 1;
+    CREDIT_CARD = 2;
+    PREPAID_CARD = 3;
+    CHEQUE = 4;
+    BANK_TRANSFER = 5;
+    STANDING_ORDER = 6;
+    DIRECT_DEBIT = 7;
+    DIGITAL_WALLET = 8; //e.g. PayPal, Apple Pay
+    MOBILE_PAYMENT = 9;
+    BITCOIN = 10;
+    COUPON = 11;
+    CREDIT_NOTE = 12;
+    ACCOUNT_BALANCE = 13;
+    DIGITAL_STORE = 14; //e.g. Play Store, AppStore
+}
+
+enum BillingCycleDay {
+    SYNC_START = 0;//Progress by 1 month, would go no further than the 1st of the (+1 month) e.g. 31st Jan > 1st Mar
+    SYNC_END = 1;//Progress by 1 month, would not go past the next month, and sync to the end, e.g. 31st Jan > 28th Feb, would remain on 28th Mar
+    RESYNC_END = 2;//Same as sync end, but would sync back to the subscription start date, e.g. 31st Jan, 28th Feb, 31 Mar, 30 Apr
+    SPECIFIC_DAY = 3;
+    DAY_OF_WEEK = 4;
+    MONTH_END = 5;
+}
+
+enum BillingCyclePeriod {
+    NONE = 0;
+    DAY = 1;
+    WEEK = 2;
+    MONTH = 3;
+    YEAR = 4;
+}
+
+enum PurchaseStatus {
+    UNKNOWN_PURCHASE_STATUS = 0;
+    INTERESTED = 1;
+    CHECKOUT = 2;
+    SETUP = 3;
+    ACTIVE = 4;
+    INACTIVE = 5;
+    SUSPENDED = 6;
+    CANCELLED = 7;
+    ENDED = 8;
+    TRIAL = 9;
+}
+
+enum AgreementAction {
+    CREATE = 0;
+    ACCEPTE = 1;
+    SUSPEND = 2;
+    UNSUSPEND = 3;
+    CANCEL = 4;
+    RESTORE = 5;
+    TERMINATE = 6;
+}
+
+message Transaction {
+    string id = 1;
+    TransactionType type = 2;
+    string currency = 3;
+    int64 raw_amount = 4;
+    int64 setup_amount = 5;
+    int64 shipping_amount = 6;
+    int64 discount_amount = 7;
+    int64 setup_discount_amount = 8;
+    int64 shipping_discount_amount = 9;
+    int64 tax_amount = 10;
+    int64 total_amount = 11;
+    int64 total_discount_amount = 12;
+    PaymentMethod payment_method = 13;
+    string payment_method_detail = 14;//e.g. Visa, Mastercard, PayPal
+    string gateway_id = 15;
+    google.protobuf.Timestamp timestamp = 16;
+}
+
+message BillingCycle {
+    BillingCyclePeriod period = 1;
+    int32 frequency = 2;//e.g. 6 for 6 month
+    BillingCycleDay day = 3;
+    string day_value = 4;//e.g. 3 for 3rd of month, 1 for Monday (based on day value)
+}
+
+message PurchasedItem {
+    string id = 1;
+    string product_code = 2;
+    string sku = 3;
+    string name = 4;
+    int64 unit_price = 5;
+    int32 quantity = 6;
+    fortifi.product.ProductType product_type = 7;
+    google.protobuf.Timestamp expiry = 9;
+    google.protobuf.Timestamp start_date = 10;
+    bool renews = 11;
+    string parent_purchase_id = 12;
+}

@@ -3,7 +3,7 @@ syntax = "proto3";
 package sockets;
 
 message SocketMessage {
-    string appId = 1;
+    string app_id = 1;
     string channel = 2;
     string action = 3;
     string payload = 4;

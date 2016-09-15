@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package fortifi.ftypes;
+
+option go_package = "github.com/fortifi/proto-go/ftypes/fortifi";
+
+enum Direction {
+    INBOUND = 0;
+    OUTBOUND = 1;
+    BI_DIRECTIONAL = 2;
+}
+
+// Core Entities
+
+message Brand {
+    string id = 1;
+    string name = 2;
+    string primary_domain = 3;
+}
+
+message Department {
+    string id = 1;
+    string name = 2;
+}
+
+// - Location
+
+message GeoLocation {
+    double longitude = 1;
+    double latitude = 2;
+    string continent = 3; //Europe, North America
+    string sovereign_state = 4;//United Kingdom, United States
+    string country = 5;//England, United States
+    string region = 6; //South West
+    string state = 7;//Devon, Arizona
+    string borough = 8;//Torbay, Maricopa County
+    string town = 9;//Paignton, Tempe
+    string suburb = 10;//Preston, -
+    string postal = 11;//TQ3 1, 85280
+}

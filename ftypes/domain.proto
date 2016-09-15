@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package fortifi.domain;
+
+option go_package = "github.com/fortifi/proto-go/ftypes/domain";
+
+enum DomainServiceType {
+    CUSTOMER = 0;
+    COMMUNICATION = 1;
+    SUPPORT = 2;
+    CHAT = 3;
+}
+
+enum DomainTargetType {
+    NONE = 0;
+    COUNTRY = 1;
+    LANGUAGE = 2;
+    PRODUCT = 3;
+    DEVELOPMENT = 4; //e.g. Serving alpha, beta etc
+}
+
+message DomainTarget {
+    DomainTargetType type = 1;
+    string value = 2; //e.g. en / en-GB / product-id / US
+}
+
+message DomainService {
+    string domain = 1;
+    DomainServiceType service = 2;
+    string subdomain = 3;
+}
+
+message Domain {
+    string domain = 1;
+    string brand_id = 2;
+    repeated DomainTarget targets = 3;
+    repeated DomainService services = 4;
+}

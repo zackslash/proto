@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package fortifi.product;
+
+option go_package = "github.com/fortifi/proto-go/ftypes/product";
+
+enum ProductType {
+    PRODUCT = 0;
+    SERVICE = 1;
+}
+
+message Product {
+    string id = 1;
+    string code = 2;
+    string name = 3;
+    string group = 4;
+    ProductType type = 5;
+    string description = 6;
+    string parent_product_id = 7;
+}
+
+message ProductGroup {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+message ProductFeature {
+    string id = 1;
+    string code = 2;
+    string product_id = 3;
+    string name = 4;
+    string description = 5;
+}
