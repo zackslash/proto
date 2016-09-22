@@ -30,13 +30,13 @@ message Property{
 
 message MutationRequest{
     string fid = 1;
-    repeated Property properties = 2;
+    map<string,Property> properties = 2;
     string member_id = 3;
 }
 
 message ReadRequest{
     string fid = 1;
-    repeated Property properties = 2;
+    map<string,Property> properties = 2;
 }
 
 message MutationResponse{
@@ -47,7 +47,7 @@ message MutationResponse{
 
 message PropertiesResponse{
     string fid = 1;
-    repeated Property properties = 2;
+    map<string,Property> properties = 2;
 }
 
 service Fdl{
