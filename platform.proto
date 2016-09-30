@@ -20,6 +20,10 @@ message HttpResponse{
     string body = 2;
     string content_type = 3;
     string language = 4;
+    message HttpHeaderParameter{
+        repeated string values = 1;
+    }
+    map<string, HttpHeaderParameter> headers = 5;
 }
 
 enum SocketAction{
