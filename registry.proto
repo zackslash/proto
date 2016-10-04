@@ -25,7 +25,7 @@ message Relationship {
   string global_app_id = 3;
 }
 
-message JoinRequest {
+message InstallRequest {
   Relationship relationship = 1;
   TrustMode trust_mode = 2; // Need a prenup?
   repeated AppPermission permissions = 3;
@@ -94,7 +94,7 @@ message RelationshipData {
 message RelationshipsResponse { repeated RelationshipData relationships = 1; }
 
 service Registry {
-  rpc Install(JoinRequest) returns (BoolResponse);
+  rpc Install(InstallRequest) returns (BoolResponse);
   rpc Uninstall(Relationship) returns (BoolResponse);
   rpc Activate(Relationship) returns (BoolResponse);
   rpc Deactivate(Relationship) returns (BoolResponse);
