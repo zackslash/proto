@@ -28,7 +28,7 @@ message Relationship {
 message JoinRequest {
   Relationship relationship = 1;
   TrustMode trust_mode = 2; // Need a prenup?
-  map<string, Permission> permissions = 3;
+  repeated AppPermission permissions = 3;
 }
 
 message TrustModeRequest {
@@ -38,7 +38,7 @@ message TrustModeRequest {
 
 message PermissionsRequest {
   Relationship relationship = 1;
-  map<string, Permission> permissions = 2;
+  repeated AppPermission permissions = 2;
 }
 
 message ConfigureRequest {
@@ -51,7 +51,7 @@ message Configuration {
   string value = 2;
 }
 
-message Permission {
+message AppPermission {
   string id = 1;
   Permission permission = 2;
 }
@@ -79,7 +79,7 @@ message RelationshipRequest {
 message RelationshipData {
   Relationship relationship = 1;
   TrustMode trust_mode = 2;
-  map<string, Permission> permissions = 3;
+  repeated AppPermission permissions = 3;
   repeated Configuration configuration = 4;
   repeated AppItem navigation = 5;
   repeated AppItem quick_actions = 6;
