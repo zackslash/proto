@@ -1,6 +1,7 @@
 syntax = "proto3";
 
-package appregistry;
+//Storage of applications
+package undercroft;
 
 message VendorRequest { string id = 1; }
 
@@ -82,7 +83,7 @@ message AppUpdateResponse {
   bool updated = 3;
 }
 
-service AppRegistry {
+service Undercroft {
   rpc RetrieveVendor(VendorRequest) returns (VendorResponse);
   rpc UpdateVendor(VendorUpdateRequest) returns (VendorUpdateResponse);
   rpc RegisterVendor(VendorRegisterRequest) returns (VendorRegisterResponse);
