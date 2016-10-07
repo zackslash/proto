@@ -120,7 +120,6 @@ service Undercroft {
   rpc ListApps(AppListRequest) returns (AppsResponse);
   rpc RegisterApp(AppRegisterRequest) returns (AppRegisterResponse);
   rpc UpdateApp(AppUpdateRequest) returns (AppUpdateResponse);
-  rpc ListVendors(VendorListRequest) returns (VendorsResponse);
 
   rpc RetrieveGroup(GroupRequest) returns (GroupResponse);
   rpc ListGroups(GroupListRequest) returns (GroupsResponse);
