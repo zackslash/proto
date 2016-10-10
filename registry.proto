@@ -3,6 +3,12 @@ syntax = "proto3";
 // Where Organisations/Users get hitched to apps
 package registry;
 
+enum Status {
+  INSTALLED = 0;
+  ACTIVE = 1;
+  DISABLED = 2;
+}
+
 enum Permission {
   DENY = 0;
   ALLOW = 1;
@@ -89,6 +95,7 @@ message RelationshipData {
   repeated AppItem panel_integrations = 10;
   repeated AppItem menu_integrations = 11;
   repeated AppItem action_integrations = 12;
+  Status status = 13;
 }
 
 message RelationshipsResponse { repeated RelationshipData relationships = 1; }
