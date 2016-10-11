@@ -38,6 +38,6 @@ message SocketRequest {
 }
 
 service FortifiPlatform{
-    rpc HandleHttpRequest(HttpRequest) returns (HttpResponse);
+    rpc HandleHTTPRequest(HttpRequest) returns (HttpResponse);
     rpc HandleSocketAction(SocketRequest) returns (HttpResponse);
 }
