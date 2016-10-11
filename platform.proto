@@ -2,28 +2,28 @@ syntax = "proto3";
 
 package platform;
 
-message HttpRequest {
-    message HttpParameter{
+message HTTPRequest {
+    message HTTPParameter{
         repeated string values = 1;
     }
     string path = 1;
     string method = 2;
-    map<string, HttpParameter> post_params = 3;
-    map<string, HttpParameter> query_params = 4;
+    map<string, HTTPParameter> post_params = 3;
+    map<string, HTTPParameter> query_params = 4;
     string body = 5;
     string language = 6;
     string content_type = 7;
 }
 
-message HttpResponse{
+message HTTPResponse{
     int32 status_code = 1;
     string body = 2;
     string content_type = 3;
     string language = 4;
-    message HttpHeaderParameter{
+    message HTTPHeaderParameter{
         repeated string values = 1;
     }
-    map<string, HttpHeaderParameter> headers = 5;
+    map<string, HTTPHeaderParameter> headers = 5;
 }
 
 enum SocketAction{
@@ -38,6 +38,6 @@ message SocketRequest {
 }
 
 service FortifiPlatform{
-    rpc HandleHTTPRequest(HttpRequest) returns (HttpResponse);
-    rpc HandleSocketAction(SocketRequest) returns (HttpResponse);
+    rpc HandleHTTPRequest(HTTPRequest) returns (HTTPResponse);
+    rpc HandleSocketAction(SocketRequest) returns (HTTPResponse);
 }
