@@ -21,8 +21,8 @@ enum Visibility {
 }
 
 enum TrustMode {
-  WHITELIST = 0; // Specifically allow actions etc
-  BLACKLIST = 1; // Allow everything, but specifically remove actions etc
+  NONE = 0; // Specifically allow actions etc
+  FULL = 1; // Allow everything, but specifically remove actions etc
 }
 
 message Relationship {
