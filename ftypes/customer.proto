@@ -5,8 +5,8 @@ package fortifi.customer;
 option go_package = "customer";
 
 import "google/protobuf/timestamp.proto";
-import "finance.proto";
-import "traffic.proto";
+import "ftypes/finance.proto";
+import "ftypes/traffic.proto";
 
 enum AccountType {
     UNKNOWN = 0;

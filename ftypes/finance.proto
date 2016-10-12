@@ -5,7 +5,7 @@ package fortifi.finance;
 option go_package = "finance";
 
 import "google/protobuf/timestamp.proto";
-import "product.proto";
+import "ftypes/product.proto";
 
 enum TransactionType {
     AUTH = 0;
