@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package fortifi.communication;
 
-option go_package = "communication";
+option go_package = "github.com/fortifi/proto-go/ftypes/communication";
 
 enum CommunicationMethod {
     EMAIL = 0;

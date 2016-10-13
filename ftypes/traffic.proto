@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package fortifi.traffic;
 
-option go_package = "traffic";
+option go_package = "github.com/fortifi/proto-go/ftypes/traffic";
 
 message CampaignDetails {
     string id = 1; //Campaign ID, Post ID etc

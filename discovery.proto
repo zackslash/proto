@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package discovery;
 
+option go_package = "github.com/fortifi/proto-go/discovery";
+
 message RegisterRequest {
     string app_id = 1;
     string instance_uuid = 2;

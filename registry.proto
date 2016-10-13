@@ -3,6 +3,8 @@ syntax = "proto3";
 // Where Organisations/Users get hitched to apps
 package registry;
 
+option go_package = "github.com/fortifi/proto-go/registry";
+
 enum Status {
   INSTALLED = 0;
   ACTIVE = 1;

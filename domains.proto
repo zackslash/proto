@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package domains;
 
+option go_package = "github.com/fortifi/proto-go/domains";
+
 import "google/protobuf/timestamp.proto";
 
 message LookupRequest{

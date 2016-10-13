@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package fortifi.ftypes;
 
-option go_package = "fortifi";
+option go_package = "github.com/fortifi/proto-go/ftypes/fortifi";
 
 enum Direction {
     INBOUND = 0;

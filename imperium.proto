@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package imperium;
 
+option go_package = "github.com/fortifi/proto-go/imperium";
+
 import "google/protobuf/timestamp.proto";
 
 message CertificateRequest {

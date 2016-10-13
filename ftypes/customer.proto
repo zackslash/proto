@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package fortifi.customer;
 
-option go_package = "customer";
+option go_package = "github.com/fortifi/proto-go/ftypes/customer";
 
 import "google/protobuf/timestamp.proto";
 import "ftypes/finance.proto";

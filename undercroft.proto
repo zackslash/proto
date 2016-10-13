@@ -3,6 +3,8 @@ syntax = "proto3";
 // Storage of applications
 package undercroft;
 
+option go_package = "github.com/fortifi/proto-go/undercroft";
+
 message VendorRequest { string id = 1; }
 
 message VendorRegisterRequest {

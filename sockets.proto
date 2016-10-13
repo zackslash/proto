@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package sockets;
 
+option go_package = "github.com/fortifi/proto-go/sockets";
+
 message SocketMessage {
     string app_id = 1; //Global App ID
     string channel = 2;

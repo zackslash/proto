@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package fdl;
 
+option go_package = "github.com/fortifi/proto-go/fdl";
+
 enum PropertyType{
     META = 0;
     DATA = 1;
