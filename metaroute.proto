@@ -12,7 +12,7 @@ message HTTPRequest {
         repeated string values = 1;
     }
     map<string, HTTPParameter> post_params = 4;
-    map<string, HTTPParameter> query_params = 5;
+    string querystring = 5;
     map<string, HTTPParameter> headers = 6;
     string body = 7;
     string language = 8;
