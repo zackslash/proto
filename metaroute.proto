@@ -5,26 +5,25 @@ package metaroute;
 option go_package = "github.com/fortifi/proto-go/metaroute";
 
 message HTTPRequest {
-    string subdomain = 1;
-    string domain = 2;
-    string path = 3;
-    string method = 4;
+    string host = 1;
+    string path = 2;
+    string method = 3;
     message HTTPParameter{
         repeated string values = 1;
     }
-    map<string, HTTPParameter> post_params = 5;
-    map<string, HTTPParameter> query_params = 6;
-    map<string, HTTPParameter> headers = 7;
-    string body = 8;
-    string language = 9;
-    string content_type = 10;
+    map<string, HTTPParameter> post_params = 4;
+    map<string, HTTPParameter> query_params = 5;
+    map<string, HTTPParameter> headers = 6;
+    string body = 7;
+    string language = 8;
+    string content_type = 9;
     message CustomerInformation{
         string brand_id = 1;
         string customer_fid = 2;
         string customer_name = 3;
         map<string, string> meta = 4;
     }
-    CustomerInformation customer = 11;
+    CustomerInformation customer = 10;
 }
 
 message HTTPResponse{
