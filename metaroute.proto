@@ -38,6 +38,6 @@ message HTTPResponse{
     map<string, HTTPHeaderParameter> headers = 5;
 }
 
-service FortifiPlatform{
+service MetaRoute{
     rpc HandleHTTPRequest(HTTPRequest) returns (HTTPResponse);
 }
