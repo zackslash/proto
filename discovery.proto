@@ -9,20 +9,24 @@ message RegisterRequest {
     string instance_uuid = 2;
     string service_host = 3;
     int32 service_port = 4;
+    AppVersion version = 5;
 }
 
 message DeRegisterRequest{
     string app_id = 1;
     string instance_uuid = 2;
+    AppVersion version = 3;
 }
 
 message HeartBeatRequest{
     string app_id = 1;
     string instance_uuid = 2;
+    AppVersion version = 3;
 }
 
 message LocationRequest{
     string app_id = 1;
+    AppVersion version = 2;
 }
 
 enum ServiceStatus{
@@ -31,6 +35,12 @@ enum ServiceStatus{
     DEGRADED_PERFORMANCE = 2;
     PARTIAL_OUTAGE = 3;
     UNDER_MAINTENANCE = 5;
+}
+
+enum AppVersion{
+    ALPHA = 0;
+    BETA = 1;
+    STABLE = 2;
 }
 
 enum StatusTarget{
@@ -45,6 +55,7 @@ message StatusRequest{
     string message = 3;
     ServiceStatus status = 4;
     StatusTarget target = 5;
+    AppVersion version = 6;
 }
 
 message DiscoveryResponse{
@@ -56,6 +67,7 @@ message ServiceLocation{
     string service_host = 2;
     int32 service_port = 3;
     ServiceStatus status = 4;
+    AppVersion version = 5;
 }
 
 service Discovery {
