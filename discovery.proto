@@ -38,9 +38,9 @@ enum ServiceStatus{
 }
 
 enum AppVersion{
-    ALPHA = 0;
+    STABLE = 0;
     BETA = 1;
-    STABLE = 2;
+    ALPHA = 2;
 }
 
 enum StatusTarget{
