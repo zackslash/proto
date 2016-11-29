@@ -49,7 +49,7 @@ message AppRequest {
 }
 
 message AppsRetrieveRequest {
-  repeated AppRequest = 1;
+  repeated AppRequest request = 1;
   string language = 2;
 }
 
