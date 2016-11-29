@@ -48,12 +48,28 @@ message AppRequest {
   bool include_yaml = 3;
 }
 
+message AppsRetrieveRequest {
+  repeated AppRequest = 1;
+  string language = 2;
+}
+
+message AppSummaryResponse {
+  string vendor_id = 1;
+  string id = 2;
+  string name = 3;
+  string description = 4;
+  string category = 5;
+  string group = 6;
+  string icon = 7;
+}
+
 message AppResponse {
   string vendor_id = 1;
   string id = 2;
   string definition_yaml = 3;
 }
 
+message AppSummariesResponse { repeated AppSummaryResponse apps = 1; }
 message AppsResponse { repeated AppResponse apps = 1; }
 message AppListRequest {
   string vendor_id = 1;
@@ -88,12 +104,14 @@ message AppUpdateResponse {
 message GroupRequest {
   string vendor_id = 1;
   string id = 2;
+  bool include_yaml = 3;
 }
 
 message GroupResponse {
   string vendor_id = 1;
   string id = 2;
   repeated string app_ids = 3;
+  string definition_yaml = 4;
 }
 
 message GroupsResponse { repeated GroupResponse groups = 1; }
@@ -103,13 +121,13 @@ message GroupRegisterRequest {
   string vendor_id = 1;
   string id = 2;
   string vendor_secret = 3;
-  repeated string app_ids = 4;
+  string definition_yaml = 4;
 }
 
 message GroupUpdateRequest {
   string vendor_id = 1;
   string id = 2;
-  string app_id = 3;
+  string definition_yaml = 3;
 }
 
 service Undercroft {
@@ -120,12 +138,12 @@ service Undercroft {
 
   rpc RetrieveApp(AppRequest) returns (AppResponse);
   rpc ListApps(AppListRequest) returns (AppsResponse);
+  rpc RetrieveApps(AppsRetrieveRequest) returns (AppSummariesResponse);
   rpc RegisterApp(AppRegisterRequest) returns (AppRegisterResponse);
   rpc UpdateApp(AppUpdateRequest) returns (AppUpdateResponse);
 
   rpc RetrieveGroup(GroupRequest) returns (GroupResponse);
   rpc ListGroups(GroupListRequest) returns (GroupsResponse);
   rpc RegisterGroup(GroupRegisterRequest) returns (GroupResponse);
-  rpc AddGroupApp(GroupUpdateRequest) returns (GroupResponse);
-  rpc RemoveGroupApp(GroupUpdateRequest) returns (GroupResponse);
+  rpc UpdateGroup(GroupUpdateRequest) returns (GroupResponse);
 }
