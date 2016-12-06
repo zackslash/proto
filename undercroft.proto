@@ -61,6 +61,7 @@ message AppSummaryResponse {
   string category = 5;
   string group = 6;
   string icon = 7;
+  string app_type = 8;
 }
 
 message AppResponse {
