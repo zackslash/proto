@@ -75,6 +75,7 @@ message AppsResponse { repeated AppResponse apps = 1; }
 message AppListRequest {
   string vendor_id = 1;
   bool include_yaml = 2;
+  repeated AppRequest filter = 3;
 }
 
 message AppRegisterRequest {
