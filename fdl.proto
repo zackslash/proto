@@ -7,9 +7,8 @@ option go_package = "github.com/fortifi/proto-go/fdl";
 enum PropertyType{
     META = 0;
     DATA = 1;
-    LIST = 2;
-    UNIQUE_LIST = 3;
-    COUNTER = 4;
+    COUNTER = 2;
+    SET = 3;
 }
 
 enum MutationMode{
@@ -28,19 +27,20 @@ enum MutationStatus{
 message Property{
     string property = 1;
     PropertyType type = 2;
-    string value = 3; //Should always be a json array for list property types
-    MutationMode mode = 4;
+    string key = 3; // For list property type
+    string value = 4;
+    MutationMode mode = 5;
 }
 
 message MutationRequest{
     string fid = 1;
-    map<string,Property> properties = 2;
+    map<int32,Property> properties = 2;
     string member_id = 3;
 }
 
 message ReadRequest{
     string fid = 1;
-    map<string,Property> properties = 2;
+    map<int32,Property> properties = 2;
     string member_id = 3;
 }
 
