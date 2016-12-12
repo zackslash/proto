@@ -39,7 +39,7 @@ message MutationRequest{
 
 message ReadRequest{
     string fid = 1;
-    map<int32,Property> properties = 2;
+    repeated Property properties = 2;
     string member_id = 3;
 }
 
