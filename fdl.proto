@@ -27,7 +27,7 @@ enum MutationStatus{
 message Property{
     string property = 1;
     PropertyType type = 2;
-    string key = 3; // For list property type
+    string key = 3; // For set property type
     string value = 4;
     MutationMode mode = 5;
 }
