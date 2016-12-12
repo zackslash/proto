@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package fortifi.device;
+
+option go_package = "github.com/fortifi/proto-go/ftypes/device";
+
+enum OperatingSystem {
+    WINDOWS = 0;
+    OSX = 1;
+    LINUX = 2;
+    ANDROID = 3;
+    BLACKBERRY = 4;
+    IOS = 5;
+    FIREFOX_OS = 6;
+    CHROME_OS = 7;
+    WEB_OS = 8;
+    PALM_OS = 9;
+    SYMBIAN = 10;
+    TIZEN = 11;
+    BSD = 12;
+}
+
+enum DeviceType {
+    DESKTOP = 0;
+    TABLET = 1;
+    PHONE = 2;
+    TV = 3;
+    CAMERA = 4;
+    CAR = 5;
+    CONSOLE = 6;
+    MEDIA_PLAYER = 7;
+    GAME_CONSOLE = 8;
+    BOT = 9;
+}
+
+enum InstallAction {
+    INSTALL = 0;
+    UNINSTALL = 1;
+    UPGRADE = 2;
+    REINSTALL = 3;
+}

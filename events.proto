@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package events;
+
+option go_package = "github.com/fortifi/proto-go/events";
+
+import "ftypes/events.proto";
+
+message EventSubmittedResponse { string event_id = 1; }
+
+service Events { 
+  rpc FireViewed(fortifi.events.ViewedEvent) returns (EventSubmittedResponse);
+  rpc FireOpened(fortifi.events.OpenedEvent) returns (EventSubmittedResponse);
+  rpc FireImpression(fortifi.events.ImpressionEvent) returns (EventSubmittedResponse);
+  rpc FireLink(fortifi.events.LinkEvent) returns (EventSubmittedResponse);
+  rpc FireConversion(fortifi.events.ConversionEvent) returns (EventSubmittedResponse);
+  rpc FireInstallation(fortifi.events.InstallationEvent) returns (EventSubmittedResponse);
+  rpc FireCommunication(fortifi.events.CommunicationEvent) returns (EventSubmittedResponse);
+  rpc FireSubscription(fortifi.events.SubscriptionEvent) returns (EventSubmittedResponse);
+  rpc FireRateEntity(fortifi.events.EntityRateEvent) returns (EventSubmittedResponse);
+  rpc FireSignup(fortifi.events.SignupEvent) returns (EventSubmittedResponse);
+  rpc FireSearch(fortifi.events.SearchEvent) returns (EventSubmittedResponse);
+  rpc FireAction(fortifi.events.ActionEvent) returns (EventSubmittedResponse);
+  rpc FireBillingAgreement(fortifi.events.BillingAgreementEvent) returns (EventSubmittedResponse);
+  rpc FirePurchase(fortifi.events.PurchaseEvent) returns (EventSubmittedResponse);
+  rpc FireRefund(fortifi.events.RefundEvent) returns (EventSubmittedResponse);
+  rpc FireDispute(fortifi.events.DisputeEvent) returns (EventSubmittedResponse);
+  rpc FireSocial(fortifi.events.SocialEvent) returns (EventSubmittedResponse);
+}

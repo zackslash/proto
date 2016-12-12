@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+// Storage of applications
+package undercroft;
+
+option go_package = "github.com/fortifi/proto-go/undercroft";
+
+message VendorRequest { string id = 1; }
+
+message VendorRegisterRequest {
+  string organisation_id = 1;
+  string id = 2;
+  string name = 3;
+  string description = 4;
+}
+
+message VendorRegisterResponse {
+  string id = 1;
+  string entity_code = 2;
+  string secret = 3;
+}
+
+message VendorResponse {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string entity_code = 4;
+}
+
+message VendorUpdateRequest {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+}
+
+message VendorListRequest { string organisation_id = 1; }
+
+message VendorUpdateResponse {
+  string id = 1;
+  bool updated = 2;
+}
+
+message VendorsResponse { repeated VendorResponse vendors = 1; }
+
+message AppRequest {
+  string vendor_id = 1;
+  string id = 2;
+  bool include_yaml = 3;
+}
+
+message AppsRetrieveRequest {
+  repeated AppRequest request = 1;
+  string language = 2;
+}
+
+message AppSummaryResponse {
+  string vendor_id = 1;
+  string id = 2;
+  string name = 3;
+  string description = 4;
+  string category = 5;
+  string group = 6;
+  string icon = 7;
+  string app_type = 8;
+}
+
+message AppResponse {
+  string vendor_id = 1;
+  string id = 2;
+  string definition_yaml = 3;
+}
+
+message AppSummariesResponse { repeated AppSummaryResponse apps = 1; }
+message AppsResponse { repeated AppResponse apps = 1; }
+message AppListRequest {
+  string vendor_id = 1;
+  bool include_yaml = 2;
+  repeated AppRequest filter = 3;
+}
+
+message AppRegisterRequest {
+  string vendor_id = 1;
+  string id = 2;
+  string vendor_secret = 3;
+  string definition_yaml = 4;
+}
+
+message AppRegisterResponse {
+  string vendor_id = 1;
+  string id = 2;
+  string entity_code = 3;
+}
+
+message AppUpdateRequest {
+  string vendor_id = 1;
+  string id = 2;
+  string definition_yaml = 3;
+}
+
+message AppUpdateResponse {
+  string vendor_id = 1;
+  string id = 2;
+  bool updated = 3;
+}
+
+message GroupRequest {
+  string vendor_id = 1;
+  string id = 2;
+  bool include_yaml = 3;
+}
+
+message GroupResponse {
+  string vendor_id = 1;
+  string id = 2;
+  repeated string app_ids = 3;
+  string definition_yaml = 4;
+}
+
+message GroupsResponse { repeated GroupResponse groups = 1; }
+message GroupListRequest { string vendor_id = 1; }
+
+message GroupRegisterRequest {
+  string vendor_id = 1;
+  string id = 2;
+  string vendor_secret = 3;
+  string definition_yaml = 4;
+}
+
+message GroupUpdateRequest {
+  string vendor_id = 1;
+  string id = 2;
+  string definition_yaml = 3;
+}
+
+service Undercroft {
+  rpc RetrieveVendor(VendorRequest) returns (VendorResponse);
+  rpc UpdateVendor(VendorUpdateRequest) returns (VendorUpdateResponse);
+  rpc RegisterVendor(VendorRegisterRequest) returns (VendorRegisterResponse);
+  rpc ListVendors(VendorListRequest) returns (VendorsResponse);
+
+  rpc RetrieveApp(AppRequest) returns (AppResponse);
+  rpc ListApps(AppListRequest) returns (AppsResponse);
+  rpc RetrieveApps(AppsRetrieveRequest) returns (AppSummariesResponse);
+  rpc RegisterApp(AppRegisterRequest) returns (AppRegisterResponse);
+  rpc UpdateApp(AppUpdateRequest) returns (AppUpdateResponse);
+
+  rpc RetrieveGroup(GroupRequest) returns (GroupResponse);
+  rpc ListGroups(GroupListRequest) returns (GroupsResponse);
+  rpc RegisterGroup(GroupRegisterRequest) returns (GroupResponse);
+  rpc UpdateGroup(GroupUpdateRequest) returns (GroupResponse);
+}

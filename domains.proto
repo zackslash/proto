@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package domains;
 
+option go_package = "github.com/fortifi/proto-go/domains";
+
 import "google/protobuf/timestamp.proto";
 
 message LookupRequest{
@@ -83,7 +85,7 @@ message DomainServicesResponse{
 }
 
 service Domains{
-    rpc Create(CreateDomain) returns (DomainResponse);
+    rpc Create(CreateRequest) returns (DomainResponse);
     rpc GetDomains(GetDomainsRequest) returns (DomainsResponse);
     rpc Retrieve(LookupRequest) returns (DomainResponse);
     rpc Verify(VerifyRequest) returns (DomainResponse);

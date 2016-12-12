@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package fortifi.traffic;
+
+option go_package = "github.com/fortifi/proto-go/ftypes/traffic";
+
+message CampaignDetails {
+    string id = 1; //Campaign ID, Post ID etc
+    string source = 2;// Publisher ID, domain e.g. google.com
+    CampaignMedium medium = 3;
+}
+
+message TrackingDetails {
+    string id1 = 1;
+    string id2 = 2;
+    string id3 = 3;
+    string id4 = 4;
+    string id5 = 5;
+}
+
+enum CampaignMedium {
+    //Branding
+    PHONE = 0;
+    LETTER = 1;
+    EMAIL = 2;
+    SMS = 3;
+    DIRECT = 4;
+    ORGANIC_SEARCH = 5;
+    WORD_OF_MOUTH = 6;
+    REFERRAL = 7;
+
+    //Paid Advertising
+    AFFILIATE = 8;
+    AFFILIATE_NETWORK = 9;
+    PAID_SEARCH = 10;
+    RETARGETTING = 11;
+    SOCIAL_ADVERT = 12;
+    INCENTIVE = 13;
+    REVIEW = 14;
+    BANNER = 15;
+
+    //Generated Content
+    SOCIAL_MEDIA = 16;
+    WEBINAR = 17;
+    FORUM = 18;
+    VIDEO = 19;
+    PODCAST = 20;
+    RESEARCH_WHITEPAPER = 21;
+    BLOG = 22;
+    COMMENT_MARKETING = 23;
+    TESTIMONIAL = 24;
+    CASE_STUDY = 25;
+    EBOOK = 26;
+    HOW_TO_GUIDE = 27;
+    INFOGRAPHIC = 28;
+
+    //Offline
+    TV = 29;
+    RADIO = 30;
+    BILLBOARD = 31;
+    NEWSPAPER = 32;
+    MAGAZINE = 33;
+    BROCHURE = 34;
+    PRINT_NEWSLETTER = 35;
+    FLYER = 36;
+    BUSINESS_CARD = 37;
+    DIRECTORY = 38;//e.g. Yellow Pages
+    COMPANY_SWAG = 39; // e.g. T-Shirts
+}
+
+
+enum LinkType {
+    FOLLOW = 0;//Redirecting to another site
+    DOWNLOAD = 1;//Triggers a download, keeping user on the same page
+}

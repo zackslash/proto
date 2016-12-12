@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package organisations;
 
+option go_package = "github.com/fortifi/proto-go/organisations";
+
 import "google/protobuf/timestamp.proto";
 
 enum Mode {

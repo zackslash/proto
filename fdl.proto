@@ -2,17 +2,21 @@ syntax = "proto3";
 
 package fdl;
 
+option go_package = "github.com/fortifi/proto-go/fdl";
+
 enum PropertyType{
     META = 0;
     DATA = 1;
     LIST = 2;
+    UNIQUE_LIST = 3;
+    COUNTER = 4;
 }
 
 enum MutationMode{
     NONE = 0;
-    WRITE = 1; //Create / Update Property - will replace a list
-    APPEND = 2; //Append items to a list
-    REMOVE = 3; //Remove items from a list
+    WRITE = 1; //Create / Replace Property - will replace a list
+    APPEND = 2; //Append items to a list | Append string to existing value for data/meta | Increment count for counter
+    REMOVE = 3; //Remove items from a list | Decrement count for counter
     DELETE = 4; //Delete Property
 }
 
@@ -30,16 +34,17 @@ message Property{
 
 message MutationRequest{
     string fid = 1;
-    repeated Property properties = 2;
+    map<string,Property> properties = 2;
     string member_id = 3;
 }
 
 message ReadRequest{
     string fid = 1;
-    repeated Property properties = 2;
+    map<string,Property> properties = 2;
+    string member_id = 3;
 }
 
-message WriteResponse{
+message MutationResponse{
     string fid = 1;
     MutationStatus status = 2;
     string status_message = 3;
@@ -47,10 +52,10 @@ message WriteResponse{
 
 message PropertiesResponse{
     string fid = 1;
-    repeated Property properties = 2;
+    map<string,Property> properties = 2;
 }
 
-service FDL{
+service Fdl{
     rpc Mutate(MutationRequest) returns (MutationResponse);
     rpc Read(ReadRequest) returns (PropertiesResponse);
 }

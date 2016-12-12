@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+package fortifi.customer;
+
+option go_package = "github.com/fortifi/proto-go/ftypes/customer";
+
+import "google/protobuf/timestamp.proto";
+import "ftypes/finance.proto";
+import "ftypes/traffic.proto";
+
+enum AccountType {
+    UNKNOWN = 0;
+    RESIDENTIAL = 1;
+    BUSINESS = 2;
+    STUDENT = 3;
+}
+
+enum AccountStatus {
+    INITIALISED = 0;
+    SETUP = 1;
+    ACTIVE = 2;
+    SUSPENDED = 3;
+    EXPIRED = 4;
+    CANCELLED = 5;
+}
+
+enum Lifecycle {
+    COLD = 0;//Provided details by a third party
+    SUBSCRIBER = 1;//Subscribed to a newsletter
+    CONTACTED = 2;//Contacted via some form
+    LEAD = 3;//Completed a product interest form e.g. more information about product
+    MARKETING_QUALIFIED_LEAD = 4;//Completed automated activities like viewing product demo
+    SALES_QUALIFIED_LEAD = 5;//Spoken to a sales rep for qualification
+    TRIAL = 6;// Subscribed for a trial account
+    FREE = 7;// Subscribed for a free account
+    OPPORTUNITY = 8;//Started Order Flow
+    CUSTOMER = 9;//Paying Customer
+    CANCEL = 10;//Removed account (from paying)
+    LAPSE = 11;//Auto Cancelled
+    LOST = 12;//Removed account (From free)
+}
+
+enum Orientation {
+    UNKNOWN_ORIENTATION = 0;
+    COST = 1;//Focuses on least cost
+    VALUE = 2;//Focuses on value for money
+    TECHNOLOGY = 3;//Quality Product, Cost of less importance
+    BRAND = 4;//Will buy anything the brand sells
+}
+
+message Customer {
+    string id = 1;
+    string brand_id = 2;
+    string account_number = 3;
+    string display_name = 4;
+    string email = 5;
+    string phone = 6;
+    string language = 7;
+    string timezone = 8;
+    string country = 9;
+    AccountType account_type = 10;
+    AccountStatus account_status = 11;
+    Lifecycle lifecycle = 12;
+    Orientation orientation = 13;
+    fortifi.traffic.CampaignMedium source = 14;
+    string source_value = 15;//e.g. google.com / publisher-id
+    string parent_account = 16;
+    string account_manager = 17;
+}
+
+message CustomerDates {
+    string customer_id = 1;
+    google.protobuf.Timestamp opened = 2;
+    google.protobuf.Timestamp closed = 3;
+    google.protobuf.Timestamp trial_start = 4;
+    google.protobuf.Timestamp trial_end = 5;
+    google.protobuf.Timestamp reopened = 6;
+}
+
+message CustomerFlags {
+    string customer_id = 1;
+    bool loyal = 2;//Loyal to brand
+    bool vic = 3;//Very Important Customer
+    bool fraud = 4;//Had fraud activity on account
+    bool chargeback = 5;//Account has chargeback
+    bool discount = 6;//Has purchased after offered discount
+    bool impulse = 7;//Will buy on impulse
+    bool test_account = 8;
+    bool has_purchased = 9;//Has purchased anything
+    bool renewing = 10;//Account is renewing
+    bool at_risk = 11;//Usually unpaid bills, at risk of cancel
+}
+
+message CustomerBilling {
+    string customer_id = 1;
+    int64 balance = 2;
+    bool is_delinquent = 3;
+    int64 total_paid = 4;
+    int64 total_refunded = 5;
+    int64 total_chargeback = 6;
+    int64 total_credited = 7;
+    google.protobuf.Timestamp delinquent_since = 8;
+}
+
+message CustomerProductFeature {
+    string customer_id = 1;
+    string product_code = 2;
+    string feature_code = 3;
+    fortifi.finance.PurchaseStatus status = 4;
+}
+
+message CustomerProducts {
+    repeated CustomerProductFeature products = 1;
+}

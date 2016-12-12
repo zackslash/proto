@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package fortifi.communication;
+
+option go_package = "github.com/fortifi/proto-go/ftypes/communication";
+
+enum CommunicationMethod {
+    EMAIL = 0;
+    PHONE = 1;
+    SMS = 2;
+    LETTER = 3;
+    MEETING = 4;
+    CHAT = 5;
+    PUSH = 6;
+}
+
+enum SubscriptionAction {
+    SUBSCRIBE = 0;
+    UNSUBSCRIBE = 1;
+    RESUBSCRIBE = 2;
+    MODIFY = 3;
+}

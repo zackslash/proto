@@ -2,11 +2,19 @@ syntax = "proto3";
 
 package sockets;
 
+option go_package = "github.com/fortifi/proto-go/sockets";
+
 message SocketMessage {
-    string appId = 1;
+    string app_id = 1; //Global App ID
     string channel = 2;
     string action = 3;
     string payload = 4;
+}
+
+message SubscribeMessage {
+    string session_id = 1;//Session to subscribe
+    string app_id = 2; //Global App ID
+    string channel = 3; //Channel to subscribe them to
 }
 
 message PublishResponse {
@@ -16,4 +24,6 @@ message PublishResponse {
 
 service Sockets {
     rpc Publish(SocketMessage) returns (PublishResponse);
+    rpc Subscribe(SubscribeMessage) returns (PublishResponse);
+    rpc UnSubscribe(SubscribeMessage) returns (PublishResponse);
 }
