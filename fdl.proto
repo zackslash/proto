@@ -31,6 +31,12 @@ message Property{
     MutationMode mode = 4;
 }
 
+message ReadProperty{
+    string property = 1;
+    PropertyType type = 2;
+    bool is_prefix = 3;
+}
+
 message MutationRequest{
     string fid = 1;
     repeated Property properties = 2;
@@ -39,7 +45,7 @@ message MutationRequest{
 
 message ReadRequest{
     string fid = 1;
-    repeated Property properties = 2;
+    repeated ReadProperty properties = 2;
     string member_id = 3;
 }
 
