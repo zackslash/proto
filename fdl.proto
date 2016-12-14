@@ -9,6 +9,7 @@ enum PropertyType{
     DATA = 1;
     COUNTER = 2;
     SET = 3;
+    LIST = 4;
 }
 
 enum MutationMode{
