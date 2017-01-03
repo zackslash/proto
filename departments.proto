@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package departments;
+
+option go_package = "github.com/fortifi/proto-go/departments";
+
+message CreateRequest{
+    string id = 1;
+    string organisation_id = 2;
+    string name = 3;
+}
+
+message IDRequest{
+    string id = 1;
+}
+
+message ListRequest{
+    string organisation_id = 1;
+}
+
+message DepartmentResponse{
+    string id = 1;
+    string organisation_id = 2;
+    string name = 3;
+}
+
+message DepartmentsResponse{
+    map<string, DepartmentResponse> departments = 1;
+}
+
+message BoolResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+service Departments{
+    rpc Create(CreateRequest) returns (DepartmentResponse);
+    rpc Retrieve(IDRequest) returns (DepartmentResponse);
+    rpc List(ListRequest) returns (DepartmentsResponse);
+    rpc Archive(IDRequest) returns (BoolResponse);
+}
