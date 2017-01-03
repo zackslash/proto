@@ -1,0 +1,136 @@
+syntax = "proto3";
+
+package customers;
+
+option go_package = "github.com/fortifi/proto-go/customers";
+
+import "google/protobuf/timestamp.proto";
+
+
+enum AccountType{
+    UNKNOWN = 0;
+    RESIDENTIAL= 1;
+    BUSINESS = 2;
+    STUDENT = 3;
+    ENTERPRISE = 4;
+    CHARITY = 5;
+}
+
+enum AccountStatus{
+    INITIALISED = 0;
+    SETUP = 1;
+    ACTIVE = 2;
+    SUSPENDED =3;
+    EXPIRED = 4;
+    CANCELLED = 5;
+    ARCHIVED = 6;
+    DELETING = 7;
+}
+
+enum Lifecycle{
+    UNKNOWN = 0;
+    COLD = 1;//Provided details by a third party
+    SUBSCRIBER = 2;//Subscribed to a newsletter
+    SUPPORT = 3;//Contacted support
+    LEAD = 4;//Completed a product interest form e.g. more information about product
+    MARKETING_QUALIFIED_LEAD = 5;//Completed automated activities like viewing product demo
+    SALES_QUALIFIED_LEAD = 6; //Spoken to a sales rep for qualification
+    TRIAL = 7; //Subscribed for a trial account
+    FREE = 8; //Subscribed for a free account
+    OPPORTUNITY = 9; //Started Order Flow
+    CUSTOMER = 10; //Paying Customer
+    CANCELLED = 11; //Removed account (from paying)
+    LAPSED = 12; //Auto Cancelled
+    LOST = 13; //Removed account (From free)
+    CLOSED = 14;//Account Closed
+}
+
+enum Orientation{
+    UNKNOWN = 0;
+    COST = 1; //focuses on least cost
+    VALUE = 2; //focuses on value for money
+    TECHNOLOGY = 3; //looks for a good quality product, cost is of less importance
+    BRAND = 4; //anything brand does, will buy
+}
+
+message CustomerResponse{
+    string id = 1;
+    string brand_id = 2;
+    string account_id = 3;//Primary Key in ORG self-maintained database (Optional)
+    string display_name = 4;
+    string email = 5;
+    string phone = 6;
+    string language = 7;//e.g. EN_GB
+    string timezone = 8; //e.g. GMT
+    string country = 9;//ISO 3166 - Alpha 2
+    AccountType account_type = 10;
+    AccountStatus account_status = 11;
+    Lifecycle lifecycle = 12;
+    Orientation orientation = 13;
+    string parent_account = 14;
+    string source = 15; //e.g. Affiliate
+    string sub_source = 16;//e.g. CPA
+    string account_manager = 17; //User ID of account manager
+}
+
+message CustomerDateResponse{
+    string id = 1;
+    google.protobuf.Timestamp account_open = 2;
+    google.protobuf.Timestamp account_close = 3;
+    google.protobuf.Timestamp trial_start = 4;
+    google.protobuf.Timestamp trial_end = 5;
+    google.protobuf.Timestamp reopend = 6;
+}
+
+message CustomerFlagResponse{
+    string id = 1;
+    bool loyal = 2; //Customer is loyal to the brand
+    bool vic = 3; //Very Important Customer
+    bool fraud = 4; //Account has had fraudulent activity
+    bool chargeback = 5; //Account has had a chargeback
+    bool discount = 6; //Customer has taken a discount on a purchase
+    bool impulse = 7; //Customer purchased on impulse
+    bool test_account = 8;
+    bool has_purchased = 9;//Customer purchased anything from brand
+    bool renewed = 10; //Account has renewed
+    bool renewing = 11;//Account is renewing
+    bool at_risk = 12; //Account probably has unpaid bills, and is at risk for leaving
+}
+
+message CustomerBillingResponse{
+    string id = 1;
+    string currency = 2;
+    string is_delinquent = 3; //Customer hasnt paid overdue invoice
+    double current_balance = 4;
+    double total_paid = 5;
+    double total_refunded = 6;
+    double total_chargeback = 7;
+    google.protobuf.Timestamp delinquent_since = 8;
+    google.protobuf.Timestamp first_paid = 9;
+    google.protobuf.Timestamp last_paid = 10;
+    google.protobuf.Timestamp last_chargeback = 11;
+    google.protobuf.Timestamp last_refunded = 12;
+    int32 chargeback_count = 13;
+    int32 refund_count = 14;
+    int32 purchase_count = 15;
+    int32 delinquent_count = 16;
+}
+
+enum ProductStatus{
+    UNKNOWN = 0;
+    INTEREST = 1; //Shown interest in product
+    CHECKOUT = 2; //Added to customers basket
+    SETUP = 3; //In Setup
+    TRIAL = 4; //In Trial
+    ACTIVE = 5;
+    SUSPENDED = 6;
+    CANCELLED = 7;
+    EXPIRED = 8; //Came to end of term
+}
+
+message CustomerProductResponse{
+    string id = 1;
+    string product_id = 2;
+    string feature_id = 3;
+    ProductStatus status = 4;
+}
