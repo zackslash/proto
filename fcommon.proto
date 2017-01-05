@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package fcommon;
+
+option go_package = "github.com/fortifi/proto-go/fcommon";
+
+message BoolResponse {
+    bool success = 1;
+    string message = 2;
+}

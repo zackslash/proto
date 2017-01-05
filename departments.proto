@@ -4,6 +4,8 @@ package departments;
 
 option go_package = "github.com/fortifi/proto-go/departments";
 
+import "fcommon.proto";
+
 message CreateRequest{
     string id = 1;
     string organisation_id = 2;
@@ -26,11 +28,6 @@ message DepartmentResponse{
 
 message DepartmentsResponse{
     map<string, DepartmentResponse> departments = 1;
-}
-
-message BoolResponse {
-    bool success = 1;
-    string message = 2;
 }
 
 service Departments{

@@ -5,6 +5,8 @@ package registry;
 
 option go_package = "github.com/fortifi/proto-go/registry";
 
+import "fcommon.proto";
+
 enum Status {
   INSTALLED = 0;
   ACTIVE = 1;
@@ -67,11 +69,6 @@ message AppPermission {
 message AppItem {
   string id = 1;
   Visibility visibility = 2;
-}
-
-message BoolResponse {
-  bool success = 1;
-  string message = 2;
 }
 
 message AppItemRequest {
