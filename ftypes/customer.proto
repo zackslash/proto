@@ -10,62 +10,70 @@ import "ftypes/traffic.proto";
 
 enum AccountType {
     UNKNOWN = 0;
-    RESIDENTIAL = 1;
+    RESIDENTIAL= 1;
     BUSINESS = 2;
     STUDENT = 3;
+    ENTERPRISE = 4;
+    CHARITY = 5;
 }
 
 enum AccountStatus {
     INITIALISED = 0;
     SETUP = 1;
     ACTIVE = 2;
-    SUSPENDED = 3;
+    SUSPENDED =3;
     EXPIRED = 4;
     CANCELLED = 5;
+    ARCHIVED = 6;
+    DELETING = 7;
 }
 
 enum Lifecycle {
-    COLD = 0;//Provided details by a third party
-    SUBSCRIBER = 1;//Subscribed to a newsletter
-    CONTACTED = 2;//Contacted via some form
-    LEAD = 3;//Completed a product interest form e.g. more information about product
-    MARKETING_QUALIFIED_LEAD = 4;//Completed automated activities like viewing product demo
-    SALES_QUALIFIED_LEAD = 5;//Spoken to a sales rep for qualification
-    TRIAL = 6;// Subscribed for a trial account
-    FREE = 7;// Subscribed for a free account
-    OPPORTUNITY = 8;//Started Order Flow
-    CUSTOMER = 9;//Paying Customer
-    CANCEL = 10;//Removed account (from paying)
-    LAPSE = 11;//Auto Cancelled
-    LOST = 12;//Removed account (From free)
+    UNKNOWN_LIFECYCLE = 0;
+    COLD = 1;//Provided details by a third party
+    SUBSCRIBER = 2;//Subscribed to a newsletter
+    SUPPORT = 3;//Contacted support
+    LEAD = 4;//Completed a product interest form e.g. more information about product
+    MARKETING_QUALIFIED_LEAD = 5;//Completed automated activities like viewing product demo
+    SALES_QUALIFIED_LEAD = 6; //Spoken to a sales rep for qualification
+    TRIAL = 7; //Subscribed for a trial account
+    FREE = 8; //Subscribed for a free account
+    OPPORTUNITY = 9; //Started Order Flow
+    CUSTOMER = 10; //Paying Customer
+    CANCELLED = 11; //Removed account (from paying)
+    LAPSED = 12; //Auto Cancelled
+    LOST = 13; //Removed account (From free)
+    CLOSED = 14;//Account Closed
 }
 
 enum Orientation {
     UNKNOWN_ORIENTATION = 0;
-    COST = 1;//Focuses on least cost
-    VALUE = 2;//Focuses on value for money
-    TECHNOLOGY = 3;//Quality Product, Cost of less importance
-    BRAND = 4;//Will buy anything the brand sells
+    COST = 1; //focuses on least cost
+    VALUE = 2; //focuses on value for money
+    TECHNOLOGY = 3; //looks for a good quality product, cost is of less importance
+    BRAND = 4; //anything brand does, will buy
 }
 
 message Customer {
     string id = 1;
     string brand_id = 2;
-    string account_number = 3;
+    string account_id = 3;//Primary Key in ORG self-maintained database (Optional)
     string display_name = 4;
     string email = 5;
     string phone = 6;
-    string language = 7;
-    string timezone = 8;
-    string country = 9;
+    string language = 7;//e.g. EN_GB
+    string timezone = 8; //e.g. GMT
+    string country = 9;//ISO 3166 - Alpha 2
     AccountType account_type = 10;
     AccountStatus account_status = 11;
     Lifecycle lifecycle = 12;
     Orientation orientation = 13;
-    fortifi.traffic.CampaignMedium source = 14;
-    string source_value = 15;//e.g. google.com / publisher-id
-    string parent_account = 16;
-    string account_manager = 17;
+    string parent_account = 14;
+
+    fortifi.traffic.CampaignMedium source = 15;
+    string source_value = 16;//e.g. google.com / publisher-id
+
+    string account_manager = 17;//User ID of account manager
 }
 
 message CustomerDates {
@@ -79,27 +87,39 @@ message CustomerDates {
 
 message CustomerFlags {
     string customer_id = 1;
-    bool loyal = 2;//Loyal to brand
-    bool vic = 3;//Very Important Customer
-    bool fraud = 4;//Had fraud activity on account
-    bool chargeback = 5;//Account has chargeback
-    bool discount = 6;//Has purchased after offered discount
-    bool impulse = 7;//Will buy on impulse
+    bool loyal = 2; //Customer is loyal to the brand
+    bool vic = 3; //Very Important Customer
+    bool fraud = 4; //Account has had fraudulent activity
+    bool chargeback = 5; //Account has had a chargeback
+    bool discount = 6; //Customer has taken a discount on a purchase
+    bool impulse = 7; //Customer purchased on impulse
     bool test_account = 8;
-    bool has_purchased = 9;//Has purchased anything
-    bool renewing = 10;//Account is renewing
-    bool at_risk = 11;//Usually unpaid bills, at risk of cancel
+    bool has_purchased = 9;//Customer purchased anything from brand
+    bool renewed = 10; //Account has renewed
+    bool renewing = 11;//Account is renewing
+    bool at_risk = 12; //Account probably has unpaid bills, and is at risk for leaving
 }
 
 message CustomerBilling {
     string customer_id = 1;
-    int64 balance = 2;
-    bool is_delinquent = 3;
-    int64 total_paid = 4;
-    int64 total_refunded = 5;
-    int64 total_chargeback = 6;
-    int64 total_credited = 7;
-    google.protobuf.Timestamp delinquent_since = 8;
+    string currency = 2;
+    string is_delinquent = 3; //Customer hasnt paid overdue invoice
+    double current_balance = 4;
+    double total_paid = 5;
+    double total_refunded = 6;
+    double total_credited = 7;
+    double total_chargeback = 8;
+    google.protobuf.Timestamp delinquent_since = 9;
+    google.protobuf.Timestamp first_paid = 10;
+    google.protobuf.Timestamp last_paid = 11;
+    google.protobuf.Timestamp last_chargeback = 12;
+    google.protobuf.Timestamp last_credit = 13;
+    google.protobuf.Timestamp last_refunded = 14;
+    int32 chargeback_count = 15;
+    int32 refund_count = 16;
+    int32 purchase_count = 17;
+    int32 credit_count = 18;
+    int32 delinquent_count = 19;
 }
 
 message CustomerProductFeature {

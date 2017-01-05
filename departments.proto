@@ -12,10 +12,6 @@ message CreateRequest{
     string name = 3;
 }
 
-message IDRequest{
-    string id = 1;
-}
-
 message ListRequest{
     string organisation_id = 1;
 }
@@ -32,7 +28,7 @@ message DepartmentsResponse{
 
 service Departments{
     rpc Create(CreateRequest) returns (DepartmentResponse);
-    rpc Retrieve(IDRequest) returns (DepartmentResponse);
+    rpc Retrieve(fcommon.IDRequest) returns (DepartmentResponse);
     rpc List(ListRequest) returns (DepartmentsResponse);
     rpc Archive(IDRequest) returns (fcommon.BoolResponse);
 }

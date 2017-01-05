@@ -8,3 +8,7 @@ message BoolResponse {
     bool success = 1;
     string message = 2;
 }
+
+message IDRequest{
+    string id = 1;
+}
