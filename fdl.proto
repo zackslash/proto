@@ -68,17 +68,19 @@ message ListAddRequest{
     string list_name = 2;
     string key = 3;
     string value = 4;
+    string member_id = 5;
 }
 
 message KeyRequest{
     string fid = 1;
     string list_name = 2;
     string key = 3;
+    string member_id = 4;
 }
 
 message ListItemResponse{
-    string key = 2;
-    string value = 3;
+    string key = 1;
+    string value = 2;
 }
 
 message ListItemsResponse{
@@ -95,6 +97,7 @@ message ListRangeRequest{
     int32 limit = 5;
     bool inclusive_start = 6;
     bool inclusive_end = 7;
+    string member_id = 8;
 }
 
 service Fdl{
