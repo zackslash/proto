@@ -40,7 +40,7 @@ enum Lifecycle {
     FREE = 8; //Subscribed for a free account
     OPPORTUNITY = 9; //Started Order Flow
     CUSTOMER = 10; //Paying Customer
-    CANCELLED = 11; //Removed account (from paying)
+    CANCEL = 11; //Removed account (from paying)
     LAPSED = 12; //Auto Cancelled
     LOST = 13; //Removed account (From free)
     CLOSED = 14;//Account Closed
