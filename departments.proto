@@ -30,5 +30,5 @@ service Departments{
     rpc Create(CreateRequest) returns (DepartmentResponse);
     rpc Retrieve(fcommon.IDRequest) returns (DepartmentResponse);
     rpc List(ListRequest) returns (DepartmentsResponse);
-    rpc Archive(IDRequest) returns (fcommon.BoolResponse);
+    rpc Archive(fcommon.IDRequest) returns (fcommon.BoolResponse);
 }
