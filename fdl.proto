@@ -64,14 +64,16 @@ message PropertiesResponse{
 }
 
 message ListAddRequest{
-    string list_name = 1;
-    string key = 2;
-    string value = 3;
+    string fid = 1;
+    string list_name = 2;
+    string key = 3;
+    string value = 4;
 }
 
 message KeyRequest{
-    string list_name = 1;
-    string key = 2;
+    string fid = 1;
+    string list_name = 2;
+    string key = 3;
 }
 
 message ListItemResponse{
@@ -80,17 +82,19 @@ message ListItemResponse{
 }
 
 message ListItemsResponse{
-    string list_name = 1;
-    repeated ListItemResponse items = 2;
+    string fid = 1;
+    string list_name = 2;
+    repeated ListItemResponse items = 3;
 }
 
 message ListRangeRequest{
-    string list_name = 1;
-    string start_key = 2;
-    string end_key = 3;
-    int32 limit = 4;
-    bool inclusive_start = 5;
-    bool inclusive_end = 6;
+    string fid = 1;
+    string list_name = 2;
+    string start_key = 3;
+    string end_key = 4;
+    int32 limit = 5;
+    bool inclusive_start = 6;
+    bool inclusive_end = 7;
 }
 
 service Fdl{
