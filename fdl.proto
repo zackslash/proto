@@ -97,8 +97,8 @@ service Fdl{
     rpc Mutate(MutationRequest) returns (MutationResponse);
     rpc Read(ReadRequest) returns (PropertiesResponse);
 
-    rpc ListAdd(ListAddRequest) returns (BoolResponse);
-    rpc ListRemove(KeyRequest) returns (BoolResponse);
+    rpc ListAdd(ListAddRequest) returns (fcommon.BoolResponse);
+    rpc ListRemove(KeyRequest) returns (fcommon.BoolResponse);
     rpc ListRetrieveItem(KeyRequest) returns (ListItemResponse);
     rpc ListRange(ListRangeRequest) returns (ListItemsResponse);
 }
