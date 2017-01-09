@@ -32,6 +32,7 @@ message Property{
     PropertyType type = 2;
     string value = 3;
     MutationMode mode = 4;
+    bool index = 5;
 }
 
 message ReadProperty{
