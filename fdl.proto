@@ -96,9 +96,7 @@ message ListRangeRequest{
     string start_key = 3;
     string end_key = 4;
     int32 limit = 5;
-    bool inclusive_start = 6;
-    bool inclusive_end = 7;
-    string member_id = 8;
+    string member_id = 6;
 }
 
 service Fdl{
