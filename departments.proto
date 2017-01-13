@@ -5,6 +5,7 @@ package departments;
 option go_package = "github.com/fortifi/proto-go/departments";
 
 import "fcommon.proto";
+import "ftypes/fortifi.proto";
 
 message CreateRequest{
     string id = 1;
@@ -16,19 +17,13 @@ message ListRequest{
     string organisation_id = 1;
 }
 
-message DepartmentResponse{
-    string id = 1;
-    string organisation_id = 2;
-    string name = 3;
-}
-
 message DepartmentsResponse{
-    map<string, DepartmentResponse> departments = 1;
+    map<string, fortifi.ftypes.Department> departments = 1;
 }
 
 service Departments{
-    rpc Create(CreateRequest) returns (DepartmentResponse);
-    rpc Retrieve(fcommon.IDRequest) returns (DepartmentResponse);
+    rpc Create(CreateRequest) returns (fortifi.ftypes.Department);
+    rpc Retrieve(fcommon.IDRequest) returns (fortifi.ftypes.Department);
     rpc List(ListRequest) returns (DepartmentsResponse);
     rpc Archive(fcommon.IDRequest) returns (fcommon.BoolResponse);
 }
