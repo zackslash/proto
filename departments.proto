@@ -12,6 +12,9 @@ message CreateRequest{
     string name = 2;
 }
 
+message ListRequest{
+}
+
 message DepartmentsResponse{
     map<string, fortifi.ftypes.Department> departments = 1;
 }
@@ -19,6 +22,6 @@ message DepartmentsResponse{
 service Departments{
     rpc Create(CreateRequest) returns (fortifi.ftypes.Department);
     rpc Retrieve(fcommon.IDRequest) returns (fortifi.ftypes.Department);
-    rpc List() returns (DepartmentsResponse);
+    rpc List(ListRequest) returns (DepartmentsResponse);
     rpc Archive(fcommon.IDRequest) returns (fcommon.BoolResponse);
 }
