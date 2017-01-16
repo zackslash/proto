@@ -15,6 +15,13 @@ message HTTPRequest {
     string body = 5;
     string language = 6;
     string content_type = 7;
+
+    enum RequestType{
+        REQUEST = 0;
+        PAGE_DEFINITION = 1;
+    }
+
+    RequestType request_type = 8;
 }
 
 message HTTPResponse{
