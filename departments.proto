@@ -6,22 +6,15 @@ option go_package = "github.com/fortifi/proto-go/departments";
 
 import "fcommon.proto";
 import "ftypes/fortifi.proto";
-
-message CreateRequest{
-    string id = 1;
-    string name = 2;
-}
-
-message ListRequest{
-}
+import "google/protobuf/empty.proto";
 
 message DepartmentsResponse{
     map<string, fortifi.ftypes.Department> departments = 1;
 }
 
 service Departments{
-    rpc Create(CreateRequest) returns (fortifi.ftypes.Department);
+    rpc Create(fortifi.ftypes.Department) returns (fortifi.ftypes.Department);
     rpc Retrieve(fcommon.IDRequest) returns (fortifi.ftypes.Department);
-    rpc List(ListRequest) returns (DepartmentsResponse);
+    rpc List(google.protobuf.Empty) returns (DepartmentsResponse);
     rpc Archive(fcommon.IDRequest) returns (fcommon.BoolResponse);
 }
