@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package brands;
+
+option go_package = "github.com/fortifi/proto-go/brands";
+
+import "fcommon.proto";
+import "ftypes/fortifi.proto";
+
+message CreateRequest{
+    string id = 1;
+    string name = 2;
+}
+
+message ListRequest{
+}
+
+message BrandsResponse{
+    map<string, fortifi.ftypes.Brand> brands = 1;
+}
+
+service Brands{
+    rpc Create(CreateRequest) returns (fortifi.ftypes.Brand);
+    rpc Retrieve(fcommon.IDRequest) returns (fortifi.ftypes.Brand);
+    rpc List(ListRequest) returns (BrandsResponse);
+    rpc Archive(fcommon.IDRequest) returns (fcommon.BoolResponse);
+}
