@@ -5,6 +5,8 @@ package registry;
 
 option go_package = "github.com/fortifi/proto-go/registry";
 
+import "fcommon.proto";
+
 enum Status {
   INSTALLED = 0;
   ACTIVE = 1;
@@ -69,11 +71,6 @@ message AppItem {
   Visibility visibility = 2;
 }
 
-message BoolResponse {
-  bool success = 1;
-  string message = 2;
-}
-
 message AppItemRequest {
   Relationship relationship = 1;
   repeated AppItem items = 2;
@@ -103,20 +100,20 @@ message RelationshipData {
 message RelationshipsResponse { repeated RelationshipData relationships = 1; }
 
 service Registry {
-  rpc Install(InstallRequest) returns (BoolResponse);
-  rpc Uninstall(Relationship) returns (BoolResponse);
-  rpc Activate(Relationship) returns (BoolResponse);
-  rpc Deactivate(Relationship) returns (BoolResponse);
-  rpc Configure(ConfigureRequest) returns (BoolResponse);
-  rpc SetPermissions(PermissionsRequest) returns (BoolResponse);
-  rpc SetTrustMode(TrustModeRequest) returns (BoolResponse);
-  rpc SetNavigation(AppItemRequest) returns (BoolResponse);
-  rpc SetQuickActions(AppItemRequest) returns (BoolResponse);
-  rpc SetSearchActions(AppItemRequest) returns (BoolResponse);
-  rpc SetQueues(AppItemRequest) returns (BoolResponse);
-  rpc SetNotifications(AppItemRequest) returns (BoolResponse);
-  rpc SetPanelIntegrations(AppItemRequest) returns (BoolResponse);
-  rpc SetMenuIntegrations(AppItemRequest) returns (BoolResponse);
-  rpc SetActionIntegrations(AppItemRequest) returns (BoolResponse);
+  rpc Install(InstallRequest) returns (fcommon.BoolResponse);
+  rpc Uninstall(Relationship) returns (fcommon.BoolResponse);
+  rpc Activate(Relationship) returns (fcommon.BoolResponse);
+  rpc Deactivate(Relationship) returns (fcommon.BoolResponse);
+  rpc Configure(ConfigureRequest) returns (fcommon.BoolResponse);
+  rpc SetPermissions(PermissionsRequest) returns (fcommon.BoolResponse);
+  rpc SetTrustMode(TrustModeRequest) returns (fcommon.BoolResponse);
+  rpc SetNavigation(AppItemRequest) returns (fcommon.BoolResponse);
+  rpc SetQuickActions(AppItemRequest) returns (fcommon.BoolResponse);
+  rpc SetSearchActions(AppItemRequest) returns (fcommon.BoolResponse);
+  rpc SetQueues(AppItemRequest) returns (fcommon.BoolResponse);
+  rpc SetNotifications(AppItemRequest) returns (fcommon.BoolResponse);
+  rpc SetPanelIntegrations(AppItemRequest) returns (fcommon.BoolResponse);
+  rpc SetMenuIntegrations(AppItemRequest) returns (fcommon.BoolResponse);
+  rpc SetActionIntegrations(AppItemRequest) returns (fcommon.BoolResponse);
   rpc GetRelationships(RelationshipRequest) returns (RelationshipsResponse);
 }

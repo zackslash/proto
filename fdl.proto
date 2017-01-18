@@ -4,6 +4,8 @@ package fdl;
 
 option go_package = "github.com/fortifi/proto-go/fdl";
 
+import "fcommon.proto";
+
 enum PropertyType{
     META = 0;
     DATA = 1;
@@ -30,6 +32,7 @@ message Property{
     PropertyType type = 2;
     string value = 3;
     MutationMode mode = 4;
+    bool index = 5;
 }
 
 message ReadProperty{
@@ -61,7 +64,47 @@ message PropertiesResponse{
     repeated Property properties = 2;
 }
 
+message ListAddRequest{
+    string fid = 1;
+    string list_name = 2;
+    string key = 3;
+    string value = 4;
+    string member_id = 5;
+}
+
+message KeyRequest{
+    string fid = 1;
+    string list_name = 2;
+    string key = 3;
+    string member_id = 4;
+}
+
+message ListItemResponse{
+    string key = 1;
+    string value = 2;
+}
+
+message ListItemsResponse{
+    string fid = 1;
+    string list_name = 2;
+    repeated ListItemResponse items = 3;
+}
+
+message ListRangeRequest{
+    string fid = 1;
+    string list_name = 2;
+    string start_key = 3;
+    string end_key = 4;
+    int32 limit = 5;
+    string member_id = 6;
+}
+
 service Fdl{
     rpc Mutate(MutationRequest) returns (MutationResponse);
     rpc Read(ReadRequest) returns (PropertiesResponse);
+
+    rpc ListAdd(ListAddRequest) returns (fcommon.BoolResponse);
+    rpc ListRemove(KeyRequest) returns (fcommon.BoolResponse);
+    rpc ListRetrieveItem(KeyRequest) returns (ListItemResponse);
+    rpc ListRange(ListRangeRequest) returns (ListItemsResponse);
 }

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package customers;
+
+option go_package = "github.com/fortifi/proto-go/customers";
+
+import "fcommon.proto";
+import "ftypes/customer.proto";
+
+service Customer{
+    rpc Retrieve(fcommon.IDRequest) returns (fortifi.customer.Customer);
+}

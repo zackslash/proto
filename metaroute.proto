@@ -17,13 +17,14 @@ message HTTPRequest {
     string body = 7;
     string language = 8;
     string content_type = 9;
+    string organisation_id = 10;
     message CustomerInformation{
         string brand_id = 1;
         string customer_fid = 2;
         string customer_name = 3;
         map<string, string> meta = 4;
     }
-    CustomerInformation customer = 10;
+    CustomerInformation customer = 11;
 }
 
 message HTTPResponse{
