@@ -10,6 +10,7 @@ import "ftypes/fortifi.proto";
 message CreateRequest{
     string id = 1;
     string name = 2;
+    string primary_domain = 3;
 }
 
 message ListRequest{
